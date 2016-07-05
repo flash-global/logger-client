@@ -1,16 +1,25 @@
 {
-  "name": "opcoding/logger-client",
+  "name": "fei/logger-client",
   "authors": [
     {
       "name": "Jerome Schaeffer",
       "email": "jsc@opcoding.eu"
     }
   ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://satis.test.flash-global.net"
+    }
+  ],
   "autoload": {
     "psr-4": {
-      "Pricer\\Logger\\Client\\": "src/"
+      "Fei\\Service\\Logger\\Client\\": "src/"
     }
   },
+  "require": {
+    "fei/api-client": "dev-develop"
+  }
   "require-dev": {
     "fzaninotto/faker": "^1.6",
     "codeception/codeception": "^2.2"
