@@ -12,6 +12,7 @@ namespace Pricer\Logger\Client;
 use Fei\ApiClient\AbstractApiClient;
 use Fei\ApiClient\ApiRequestOption;
 use Fei\ApiClient\RequestDescriptor;
+use Fei\Service\Logger\Entity\Notification;
 
 class Logger extends AbstractApiClient implements LoggerInterface
 {
@@ -21,16 +22,20 @@ class Logger extends AbstractApiClient implements LoggerInterface
     /** @var  string */
     protected $exceptionLogFile;
 
+    const PARAMETER_BASEURL = 'baseUrl';
+    const PARAMETER_FILTER = 'filter';
+    
     /**
      * Logger constructor.
      *
      * @param array $options
+     * 
      */
     public function __construct(array $options = array())
     {
         $this->exceptionLogFile = '/tmp/logger.log';
-        $this->filterLevel = !empty($options['filter']) ? $options['filter'] : Notification::LEVEL_DEBUG;
-        $loggerUrl = !empty($options['baseUrl']) ? $options['baseUrl'] : $this->getServerUrl();
+        $this->filterLevel = !empty($options[self::PARAMETER_FILTER]) ? $options[self::PARAMETER_FILTER] : Notification::DEBUG;
+        $loggerUrl = !empty($options[self::PARAMETER_BASEURL]) ? $options[self::PARAMETER_BASEURL] : $this->getServerUrl();
         $this->setBaseUrl($loggerUrl);
     }
 
@@ -59,7 +64,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
     {
         try {
             if (is_string($notification)) {
-                $notification = new Notification($notification, Notification::LEVEL_INFO);
+                $notification = new Notification($notification, Notification::INFO);
             }
 
             $notification->hydrate($params);
@@ -69,13 +74,13 @@ class Logger extends AbstractApiClient implements LoggerInterface
             $request->addBodyParam('context', $notification->getContext());
             $request->addBodyParam('origin', 'http');
             $request->addBodyParam('level', (int)$notification->getLevel());
-            $request->addBodyParam('location', $notification->getLocation());
-            $request->addBodyParam('server', $this->getServerName());
-            $request->addBodyParam('user', $params['login']);
-            $request->addBodyParam('command', $params['command']);
-            $request->addBodyParam('env', $params['env']);
+            $request->addBodyParam('namespace', $notification->getNamespace());
+            $request->addBodyParam('server', $notification->getServer());
+            $request->addBodyParam('user', $notification->getUser());
+            $request->addBodyParam('command', $notification->getCommand());
+            $request->addBodyParam('env', $notification->getEnv());
             $request->addBodyParam('category', $notification->getCategory());
-            $request->addBodyParam('backtrace', json_encode(debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 3)));
+            $request->addBodyParam('backtrace', $notification->getBackTrace());
 
             $request->setUrl($this->buildUrl('/api/notifications'));
             $request->setMethod('POST');

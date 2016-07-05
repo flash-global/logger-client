@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "116f3bc8312f1547a48ac0b18e3dd727",
-    "content-hash": "9ce6b33f731116e66b30acdf43130b41",
+    "hash": "85a3ded1fb0ef91fb8dcaec3f86517ce",
+    "content-hash": "62f65b2b6c673792f9bd1398bbfe58e8",
     "packages": [
         {
             "name": "amphp/amp",
@@ -391,12 +391,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/api-client.git",
-                "reference": "560d1dfb212ef6fcb41bb0a692e4f8a48ff796b6"
+                "reference": "15b3229ebb0dde74b4d9e15dbea3806942c4e6af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/api-client/zipball/560d1dfb212ef6fcb41bb0a692e4f8a48ff796b6",
-                "reference": "560d1dfb212ef6fcb41bb0a692e4f8a48ff796b6",
+                "url": "https://api.github.com/repos/flash-global/api-client/zipball/15b3229ebb0dde74b4d9e15dbea3806942c4e6af",
+                "reference": "15b3229ebb0dde74b4d9e15dbea3806942c4e6af",
                 "shasum": ""
             },
             "require": {
@@ -422,7 +422,7 @@
                 "source": "https://github.com/flash-global/api-client/tree/develop",
                 "issues": "https://github.com/flash-global/api-client/issues"
             },
-            "time": "2016-07-04 15:20:32"
+            "time": "2016-07-05 08:05:27"
         },
         {
             "name": "fei/entities",
@@ -457,6 +457,51 @@
                 "issues": "https://github.com/flash-global/entities/issues"
             },
             "time": "2016-07-04 15:21:46"
+        },
+        {
+            "name": "fei/logger-common",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/logger-common.git",
+                "reference": "64661fccb1b8afb721089f721a26d6eb2b6b4273"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/flash-global/logger-common/zipball/64661fccb1b8afb721089f721a26d6eb2b6b4273",
+                "reference": "64661fccb1b8afb721089f721a26d6eb2b6b4273",
+                "shasum": ""
+            },
+            "require": {
+                "fei/entities": "dev-develop",
+                "league/fractal": "^0.13.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "2.*",
+                "doctrine/orm": ">=2.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Logger\\": "src"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Gauthier Delamarre",
+                    "email": "gauthier@opcoding.eu",
+                    "role": "lead"
+                }
+            ],
+            "description": "Flash applicative logger - common components",
+            "keywords": [
+                "logger"
+            ],
+            "support": {
+                "source": "https://github.com/flash-global/logger-common/tree/develop",
+                "issues": "https://github.com/flash-global/logger-common/issues"
+            },
+            "time": "2016-07-04 08:45:03"
         },
         {
             "name": "guzzle/guzzle",
@@ -553,6 +598,69 @@
             ],
             "abandoned": "guzzlehttp/guzzle",
             "time": "2015-03-18 18:23:50"
+        },
+        {
+            "name": "league/fractal",
+            "version": "0.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/fractal.git",
+                "reference": "3caeefbad51bce7a06947321938128512f42346c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/3caeefbad51bce7a06947321938128512f42346c",
+                "reference": "3caeefbad51bce7a06947321938128512f42346c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "illuminate/contracts": "~5.0",
+                "mockery/mockery": "~0.9",
+                "pagerfanta/pagerfanta": "~1.0.0",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~1.5",
+                "zendframework/zend-paginator": "~2.3"
+            },
+            "suggest": {
+                "illuminate/pagination": "The Illuminate Pagination component.",
+                "pagerfanta/pagerfanta": "Pagerfanta Paginator",
+                "zendframework/zend-paginator": "Zend Framework Paginator"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.13-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Fractal\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phil Sturgeon",
+                    "email": "me@philsturgeon.uk",
+                    "homepage": "http://philsturgeon.uk/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Handle the output of complex data structures ready for API output.",
+            "homepage": "http://fractal.thephpleague.com/",
+            "keywords": [
+                "api",
+                "json",
+                "league",
+                "rest"
+            ],
+            "time": "2015-10-07 14:48:58"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2712,7 +2820,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "fei/entities": 20,
-        "fei/api-client": 20
+        "fei/api-client": 20,
+        "fei/logger-common": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

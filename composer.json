@@ -19,7 +19,8 @@
   },
   "require": {
       "fei/entities": "dev-develop",
-      "fei/api-client": "dev-develop"
+      "fei/api-client": "dev-develop",
+      "fei/logger-common": "dev-develop"
   },
   "repositories": [
     {
