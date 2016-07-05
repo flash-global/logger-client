@@ -19,7 +19,7 @@
   },
   "require": {
     "fei/api-client": "dev-develop"
-  }
+  },
   "require-dev": {
     "fzaninotto/faker": "^1.6",
     "codeception/codeception": "^2.2"
