@@ -107,7 +107,10 @@ class Logger extends AbstractApiClient implements LoggerInterface
      */
     public function flush()
     {
-        return $this->commit();
+        if(!empty($this->delayedRequests)){
+            $this->commit();
+        }
+        return $this;
     }
 
     /**
