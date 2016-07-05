@@ -12,6 +12,19 @@ namespace Pricer\Logger\Client;
 class Notification
 {
 
+    // level
+    const LEVEL_DEBUG   = 1;
+    const LEVEL_INFO    = 2;
+    const LEVEL_WARNING = 4;
+    const LEVEL_ERROR   = 8;
+    const LEVEL_PANIC   = 16;
+
+    // category
+    const CATEGORY_SECURITY    = 1;
+    const CATEGORY_PERFORMANCE = 2;
+    const CATEGORY_BUSINESS    = 4;
+
+
     /** @var  string */
     protected $message;
 
@@ -40,47 +53,6 @@ class Notification
     {
         $this->message = $message;
         $this->level = $level;
-    }
-
-    /**
-     * @return LoggerInterface
-     */
-    public function getLogger()
-    {
-        return $this->logger;
-    }
-
-    /**
-     * @param LoggerInterface $logger
-     *
-     * @return Notification
-     */
-    public function setLogger($logger)
-    {
-        $this->logger = $logger;
-
-        return $this;
-    }
-
-    public function hold()
-    {
-        return $this->logger->hold();
-    }
-
-    public function flush()
-    {
-        return $this->logger->flush();
-    }
-
-    public function send()
-    {
-        $params = array(
-            "category" => $this->getCategory(),
-            "context"  => $this->getContext(),
-            "location" => $this->getLocation(),
-        );
-
-        return $this->logger->log($this->getMessage(), $this->getLevel(), $params);
     }
 
     /**
@@ -179,6 +151,17 @@ class Notification
     public function setLevel($level)
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function hydrate(array $params)
+    {
+        foreach ($params as $key => $param) {
+            $setter = 'set'. ucfirst($key);
+
+            if(method_exists($this, $setter)) $this->$setter($param);
+        }
 
         return $this;
     }

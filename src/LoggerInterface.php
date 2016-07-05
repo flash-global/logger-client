@@ -13,12 +13,11 @@ interface LoggerInterface
 {
     /**
      * @param       $message
-     * @param       $level
      * @param array $params
      *
      * @return mixed|bool
      */
-    public function log($message, $level, array $params);
+    public function notify($message, array $params);
 
     /**
      * @return LoggerInterface
