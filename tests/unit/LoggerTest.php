@@ -1,6 +1,8 @@
 <?php
 
 
+use Pricer\WebClient\Transport\AsyncTransport;
+
 class LoggerTest extends \Codeception\Test\Unit
 {
     /**
@@ -19,8 +21,8 @@ class LoggerTest extends \Codeception\Test\Unit
         $this->faker = \Faker\Factory::create('fr_FR');
 
         $this->logger = new Pricer\Logger\Client\Logger();
-        $this->logger->setLoggerUrl('http:/localhost');
-        $this->logger->setTransport(new \Pricer\WebClient\Transport\AsyncTransport());
+        $this->logger->setBaseUrl('http:/localhost');
+        $this->logger->setTransport(new AsyncTransport());
     }
 
     // tests
@@ -32,10 +34,10 @@ class LoggerTest extends \Codeception\Test\Unit
 
     public function testLoggerGettersSetters()
     {
-        $this->logger->setLoggerUrl('http://httpbin.org/');
+        $this->logger->setBaseUrl('http://httpbin.org/');
 
-        $this->assertEquals('http://httpbin.org/', $this->logger->getLoggerUrl());
-        $this->assertEquals('http://httpbin.org/', $this->logger->getLoggerUrl());
+        $this->assertEquals('http://httpbin.org/', $this->logger->getBaseUrl());
+        $this->assertEquals('http://httpbin.org/', $this->logger->getBaseUrl());
 
     }
 
