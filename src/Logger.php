@@ -22,8 +22,8 @@ class Logger extends AbstractApiClient implements LoggerInterface
     /** @var  string */
     protected $exceptionLogFile;
 
-    /** @var bool|null  */
-    protected $haveBackTrace;
+    /** @var bool  */
+    protected $haveBackTrace = true;
 
     const PARAMETER_BASEURL = 'baseUrl';
     const PARAMETER_FILTER = 'filter';
@@ -33,14 +33,14 @@ class Logger extends AbstractApiClient implements LoggerInterface
      * Logger constructor.
      *
      * @param array $options
-     * 
+     *
      */
     public function __construct(array $options = array())
     {
         $this->exceptionLogFile = '/tmp/logger.log';
-        $this->filterLevel = !empty($options[self::PARAMETER_FILTER]) ? $options[self::PARAMETER_FILTER] : Notification::DEBUG;
-        $this->setBaseUrl(!empty($options[self::PARAMETER_BASEURL]) ? $options[self::PARAMETER_BASEURL] : $this->getServerUrl());
-        $this->haveBackTrace = (!empty($options[self::PARAMETER_BACKTRACE]) && is_bool($options[self::PARAMETER_BACKTRACE])) ? $options[self::PARAMETER_BACKTRACE] : null;
+        $this->filterLevel = isset($options[self::PARAMETER_FILTER]) ? $options[self::PARAMETER_FILTER] : Notification::DEBUG;
+        $this->setBaseUrl(isset($options[self::PARAMETER_BASEURL]) ? $options[self::PARAMETER_BASEURL] : $this->getServerUrl());
+        $this->haveBackTrace = isset($options[self::PARAMETER_BACKTRACE]) ? $options[self::PARAMETER_BACKTRACE] : true;
     }
 
     public function getServerUrl()
@@ -77,7 +77,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
                 $notification = new Notification($notification, Notification::INFO);
             }
 
-            $notification->hydrate($params);
+            $this->prepareNotification($notification, $params);
 
             $request = new RequestDescriptor();
             $request->addBodyParam('message', $notification->getMessage());
@@ -91,14 +91,8 @@ class Logger extends AbstractApiClient implements LoggerInterface
             $request->addBodyParam('env', $notification->getEnv());
             $request->addBodyParam('category', $notification->getCategory());
 
-            switch ($this->haveBackTrace){
-                case true:
-                    $request->addBodyParam('backtrace', json_encode(debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT)));
-                    break;
-                case false:
-                    break;
-                default:
-                    $request->addBodyParam('backtrace', json_encode(debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 3)));
+            if ($this->haveBackTrace) {
+                $request->addBodyParam('backtrace', json_encode(debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 3)));
             }
 
             $request->setUrl($this->buildUrl('/api/notifications'));
@@ -129,6 +123,13 @@ class Logger extends AbstractApiClient implements LoggerInterface
     public function __destruct()
     {
         $this->flush();
+    }
+
+    public function prepareNotification(Notification $notification, $params = null)
+    {
+        $notification->hydrate($params);
+
+        return $notification;
     }
 
     /**
