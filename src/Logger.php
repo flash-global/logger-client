@@ -125,7 +125,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
         $this->flush();
     }
 
-    public function prepareNotification(Notification $notification, $params = null)
+    protected function prepareNotification(Notification $notification, $params = null)
     {
         $notification->hydrate($params);
 

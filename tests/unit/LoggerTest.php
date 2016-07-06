@@ -1,7 +1,9 @@
 <?php
 
-
-use Pricer\WebClient\Transport\AsyncTransport;
+use Fei\ApiClient\RequestDescriptor;
+use Fei\ApiClient\Transport\TransportInterface;
+use Fei\Service\Logger\Entity\Notification;
+use Pricer\Logger\Client\Logger;
 
 class LoggerTest extends \Codeception\Test\Unit
 {
@@ -10,7 +12,7 @@ class LoggerTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    /** @var  \Pricer\Logger\Client\Logger */
+    /** @var  Logger */
     protected $logger;
 
     /** @var  Faker\Generator */
@@ -19,65 +21,62 @@ class LoggerTest extends \Codeception\Test\Unit
     protected function _before()
     {
         $this->faker = \Faker\Factory::create('fr_FR');
-
-        $this->logger = new Pricer\Logger\Client\Logger();
-        $this->logger->setBaseUrl('http:/localhost');
-        $this->logger->setTransport(new AsyncTransport());
-    }
-
-    // tests
-    public function testLoggerIsLogging()
-    {
-        $this->assertFalse($this->logger->isOnHold());
-        $this->logger->log($this->faker->sentence, $this->tester->getRandomLevel());
-    }
-
-    public function testLoggerGettersSetters()
-    {
-        $this->logger->setBaseUrl('http://httpbin.org/');
-
-        $this->assertEquals('http://httpbin.org/', $this->logger->getBaseUrl());
-        $this->assertEquals('http://httpbin.org/', $this->logger->getBaseUrl());
-
     }
 
     public function testLoggerCanFlush()
     {
-        $this->logger->hold();
-        $this->logger->log($this->faker->sentence, $this->tester->getRandomLevel());
+        $logger = new Logger();
 
-        $this->assertArrayHasKey(0, $this->logger->getRequestStack());
-        $this->assertTrue($this->logger->isOnHold());
+        $request = $this->createMock(RequestDescriptor::class);
+        $transport = $this->createMock(TransportInterface::class);
+        $transport->expects($this->once())->method('send')->with($request);
+        $logger->setTransport($transport);
 
-        $this->logger->flush();
+        $logger->hold();
+        $logger->send($request);
+        $logger->flush();
+    }
 
-        $this->assertFalse($this->logger->isOnHold());
+    public function testLoggerCanHold()
+    {
+        $logger = new Logger();
+
+        $logger->hold();
+        $this->assertAttributeEquals(true, 'isDelayed', $logger);
     }
 
     public function testLoggerCanNotify()
     {
-        $this->logger->notify($this->faker->sentence, $this->tester->getRandomLevel());
+        $logger = new Logger();
+        $logger->setBaseUrl('http://azeaze.fr/');
+
+        $notification = new Notification();
+        $notification->setMessage($this->faker->sentence);
+        $notification->setLevel(Notification::INFO);
+
+        $transport = $this->createMock(TransportInterface::class);
+        $transport->expects($this->once())->method('send');
+        $logger->setTransport($transport);
+
+        $logger->notify($notification);
     }
 
     public function testLoggerServerUrl()
     {
+        $logger = new Logger();
+
         putenv('APP_ENV=prod');
-        $this->assertEquals('http://logger.test.flash-global.net', $this->logger->getServerUrl());
+        $this->assertEquals('http://logger.test.flash-global.net', $logger->getServerUrl());
 
         putenv('APP_ENV=test');
-        $this->assertEquals('http://192.168.5.110:8080', $this->logger->getServerUrl());
+        $this->assertEquals('http://192.168.5.110:8080', $logger->getServerUrl());
 
         putenv('APP_ENV=dev');
-        $this->assertEquals('http://logger.test.flash-global.net', $this->logger->getServerUrl());
+        $this->assertEquals('http://logger.test.flash-global.net', $logger->getServerUrl());
 
         putenv('APP_ENV=other');
-        $this->assertEquals('http://logger.test.flash-global.net', $this->logger->getServerUrl());
+        $this->assertEquals('http://logger.test.flash-global.net', $logger->getServerUrl());
 
     }
 
-    public function _after()
-    {
-        $this->logger->__destruct();
-    }
-    
 }

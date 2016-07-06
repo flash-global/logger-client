@@ -7,29 +7,29 @@
  */
 
 require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../vendor/webclients/vendor/autoload.php';
 
-
+use Fei\Service\Logger\Entity\Notification;
 use Pricer\Logger\Client\Logger;
-use Pricer\WebClient\Transport\AsyncTransport;
 
 $start_time = microtime(true);
 
-$baseurl = "http://httpbin.org";
+$logger = new Logger([Logger::PARAMETER_BASEURL =>'http://localhost:8080/']);
+$logger->setTransport(new Fei\ApiClient\Transport\BasicTransport());
 
+$notification = new Notification();
+$notification->setMessage('Hello World!');
+$notification->setLevel(Notification::DEBUG);
+$notification->setCategory(Notification::PERFORMANCE);
 
-$logger = new Logger();
-
-$transporter = new AsyncTransport();
-$logger->setTransport($transporter);
-
-$request = $transporter->post(json_encode(array('test' => 123)), $baseurl . '/post');
-
-/** @var \Amp\Artax\Response $response */
-$response = \Amp\wait($transporter->send($request));
-echo($response->getBody());
-
+/** @var \Fei\ApiClient\ResponseDescriptor $log */
+$log = $logger->notify($notification);
 
 $end_time = microtime(true);
+
+if($log instanceof \Fei\ApiClient\ResponseDescriptor){
+    echo('Response '. $log->getCode(). PHP_EOL);
+}else{
+    echo "An error occured.".PHP_EOL;
+}
 
 echo "time: ", bcsub($end_time, $start_time, 2), "\n";
