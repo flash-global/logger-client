@@ -22,9 +22,13 @@ class Logger extends AbstractApiClient implements LoggerInterface
     /** @var  string */
     protected $exceptionLogFile;
 
+    /** @var bool|null  */
+    protected $haveBackTrace;
+
     const PARAMETER_BASEURL = 'baseUrl';
     const PARAMETER_FILTER = 'filter';
-    
+    const PARAMETER_BACKTRACE = 'includedBackTrace';
+
     /**
      * Logger constructor.
      *
@@ -35,8 +39,8 @@ class Logger extends AbstractApiClient implements LoggerInterface
     {
         $this->exceptionLogFile = '/tmp/logger.log';
         $this->filterLevel = !empty($options[self::PARAMETER_FILTER]) ? $options[self::PARAMETER_FILTER] : Notification::DEBUG;
-        $loggerUrl = !empty($options[self::PARAMETER_BASEURL]) ? $options[self::PARAMETER_BASEURL] : $this->getServerUrl();
-        $this->setBaseUrl($loggerUrl);
+        $this->setBaseUrl(!empty($options[self::PARAMETER_BASEURL]) ? $options[self::PARAMETER_BASEURL] : $this->getServerUrl());
+        $this->haveBackTrace = (!empty($options[self::PARAMETER_BACKTRACE]) && is_bool($options[self::PARAMETER_BACKTRACE])) ? $options[self::PARAMETER_BACKTRACE] : null;
     }
 
     public function getServerUrl()
@@ -60,6 +64,12 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
     }
 
+    /**
+     * @param       $notification
+     * @param array $params
+     *
+     * @return $this|\Fei\ApiClient\ResponseDescriptor
+     */
     public function notify($notification, array $params = [])
     {
         try {
@@ -71,16 +81,25 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
             $request = new RequestDescriptor();
             $request->addBodyParam('message', $notification->getMessage());
-            $request->addBodyParam('context', $notification->getContext());
+            $request->addBodyParam('context', json_encode($notification->getContext()));
             $request->addBodyParam('origin', 'http');
             $request->addBodyParam('level', (int)$notification->getLevel());
             $request->addBodyParam('namespace', $notification->getNamespace());
-            $request->addBodyParam('server', $notification->getServer());
+            $request->addBodyParam('server', $this->getServerName());
             $request->addBodyParam('user', $notification->getUser());
             $request->addBodyParam('command', $notification->getCommand());
             $request->addBodyParam('env', $notification->getEnv());
             $request->addBodyParam('category', $notification->getCategory());
-            $request->addBodyParam('backtrace', $notification->getBackTrace());
+
+            switch ($this->haveBackTrace){
+                case true:
+                    $request->addBodyParam('backtrace', json_encode(debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT)));
+                    break;
+                case false:
+                    break;
+                default:
+                    $request->addBodyParam('backtrace', json_encode(debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 3)));
+            }
 
             $request->setUrl($this->buildUrl('/api/notifications'));
             $request->setMethod('POST');
@@ -95,6 +114,17 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    protected function getServerName()
+    {
+        $uname = posix_uname();
+
+        return $uname['nodename'];
+    }
+
 
     public function __destruct()
     {
