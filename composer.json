@@ -18,7 +18,7 @@
     "codeception/codeception": "^2.2"
   },
   "require": {
-      "fei/entities": "dev-develop",
+      "fei/entities": "1.*",
       "fei/api-client": "dev-develop",
       "fei/logger-common": "dev-develop"
   },
