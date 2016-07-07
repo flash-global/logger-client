@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "85a3ded1fb0ef91fb8dcaec3f86517ce",
-    "content-hash": "62f65b2b6c673792f9bd1398bbfe58e8",
+    "hash": "2102efbf33fc2d52fb59806fb9c1921e",
+    "content-hash": "79581934bfad9c739052093444c1a436",
     "packages": [
         {
             "name": "amphp/amp",
@@ -387,21 +387,21 @@
         },
         {
             "name": "fei/api-client",
-            "version": "dev-develop",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/api-client.git",
-                "reference": "15b3229ebb0dde74b4d9e15dbea3806942c4e6af"
+                "reference": "686c4dc8c44ef8f653c6f5ca1d1cd6fb97cd29fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/api-client/zipball/15b3229ebb0dde74b4d9e15dbea3806942c4e6af",
-                "reference": "15b3229ebb0dde74b4d9e15dbea3806942c4e6af",
+                "url": "https://api.github.com/repos/flash-global/api-client/zipball/686c4dc8c44ef8f653c6f5ca1d1cd6fb97cd29fa",
+                "reference": "686c4dc8c44ef8f653c6f5ca1d1cd6fb97cd29fa",
                 "shasum": ""
             },
             "require": {
                 "amphp/artax": "^2.0",
-                "fei/entities": "dev-develop",
+                "fei/entities": "1.*",
                 "guzzle/guzzle": "^3.9"
             },
             "require-dev": {
@@ -419,14 +419,14 @@
             ],
             "description": "FEI client side API helpers",
             "support": {
-                "source": "https://github.com/flash-global/api-client/tree/develop",
+                "source": "https://github.com/flash-global/api-client/tree/v1.0.0",
                 "issues": "https://github.com/flash-global/api-client/issues"
             },
-            "time": "2016-07-05 08:05:27"
+            "time": "2016-07-06 11:44:27"
         },
         {
             "name": "fei/entities",
-            "version": "dev-develop",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/entities.git",
@@ -460,20 +460,20 @@
         },
         {
             "name": "fei/logger-common",
-            "version": "dev-develop",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/logger-common.git",
-                "reference": "64661fccb1b8afb721089f721a26d6eb2b6b4273"
+                "reference": "f89aa51153f7e72cd29359036f7157f3370574d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/logger-common/zipball/64661fccb1b8afb721089f721a26d6eb2b6b4273",
-                "reference": "64661fccb1b8afb721089f721a26d6eb2b6b4273",
+                "url": "https://api.github.com/repos/flash-global/logger-common/zipball/f89aa51153f7e72cd29359036f7157f3370574d1",
+                "reference": "f89aa51153f7e72cd29359036f7157f3370574d1",
                 "shasum": ""
             },
             "require": {
-                "fei/entities": "dev-develop",
+                "fei/entities": "1.*",
                 "league/fractal": "^0.13.0"
             },
             "require-dev": {
@@ -491,6 +491,11 @@
                     "name": "Gauthier Delamarre",
                     "email": "gauthier@opcoding.eu",
                     "role": "lead"
+                },
+                {
+                    "name": "Jerome Schaeffer",
+                    "email": "jsc@opcoding.eu",
+                    "role": "developer"
                 }
             ],
             "description": "Flash applicative logger - common components",
@@ -501,7 +506,7 @@
                 "source": "https://github.com/flash-global/logger-common/tree/develop",
                 "issues": "https://github.com/flash-global/logger-common/issues"
             },
-            "time": "2016-07-04 08:45:03"
+            "time": "2016-07-06 11:41:29"
         },
         {
             "name": "guzzle/guzzle",
@@ -2818,11 +2823,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "fei/entities": 20,
-        "fei/api-client": 20,
-        "fei/logger-common": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
