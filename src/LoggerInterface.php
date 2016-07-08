@@ -19,14 +19,4 @@ interface LoggerInterface
      */
     public function notify($message, array $params);
 
-    /**
-     * @return LoggerInterface
-     */
-    public function hold();
-
-    /**
-     * @return array|bool
-     */
-    public function flush();
-
 }

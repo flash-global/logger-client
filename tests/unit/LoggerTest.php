@@ -1,6 +1,5 @@
 <?php
 
-use Fei\ApiClient\RequestDescriptor;
 use Fei\ApiClient\Transport\TransportInterface;
 use Fei\Service\Logger\Entity\Notification;
 use Pricer\Logger\Client\Logger;
@@ -23,25 +22,24 @@ class LoggerTest extends \Codeception\Test\Unit
         $this->faker = \Faker\Factory::create('fr_FR');
     }
 
-    public function testLoggerCanFlush()
+    public function testLoggerCanCommit()
     {
         $logger = new Logger();
 
-        $request = $this->createMock(RequestDescriptor::class);
         $transport = $this->createMock(TransportInterface::class);
-        $transport->expects($this->once())->method('send')->with($request);
+        $transport->expects($this->once())->method('sendMany');
         $logger->setTransport($transport);
 
-        $logger->hold();
-        $logger->send($request);
-        $logger->flush();
+        $logger->begin();
+        $logger->notify('test');
+        $logger->commit();
     }
 
-    public function testLoggerCanHold()
+    public function testLoggerCanDelay()
     {
         $logger = new Logger();
 
-        $logger->hold();
+        $logger->begin();
         $this->assertAttributeEquals(true, 'isDelayed', $logger);
     }
 
@@ -61,22 +59,6 @@ class LoggerTest extends \Codeception\Test\Unit
         $logger->notify($notification);
     }
 
-    public function testLoggerServerUrl()
-    {
-        $logger = new Logger();
 
-        putenv('APP_ENV=prod');
-        $this->assertEquals('http://logger.test.flash-global.net', $logger->getServerUrl());
-
-        putenv('APP_ENV=test');
-        $this->assertEquals('http://192.168.5.110:8080', $logger->getServerUrl());
-
-        putenv('APP_ENV=dev');
-        $this->assertEquals('http://logger.test.flash-global.net', $logger->getServerUrl());
-
-        putenv('APP_ENV=other');
-        $this->assertEquals('http://logger.test.flash-global.net', $logger->getServerUrl());
-
-    }
 
 }
