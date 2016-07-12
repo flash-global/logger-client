@@ -387,16 +387,16 @@
         },
         {
             "name": "fei/api-client",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/api-client.git",
-                "reference": "686c4dc8c44ef8f653c6f5ca1d1cd6fb97cd29fa"
+                "reference": "96ef54dbd088d3040fb9a16cc9ebf8b426232766"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/api-client/zipball/686c4dc8c44ef8f653c6f5ca1d1cd6fb97cd29fa",
-                "reference": "686c4dc8c44ef8f653c6f5ca1d1cd6fb97cd29fa",
+                "url": "https://api.github.com/repos/flash-global/api-client/zipball/96ef54dbd088d3040fb9a16cc9ebf8b426232766",
+                "reference": "96ef54dbd088d3040fb9a16cc9ebf8b426232766",
                 "shasum": ""
             },
             "require": {
@@ -419,10 +419,10 @@
             ],
             "description": "FEI client side API helpers",
             "support": {
-                "source": "https://github.com/flash-global/api-client/tree/v1.0.0",
+                "source": "https://github.com/flash-global/api-client/tree/develop",
                 "issues": "https://github.com/flash-global/api-client/issues"
             },
-            "time": "2016-07-06 11:44:27"
+            "time": "2016-07-07 12:56:21"
         },
         {
             "name": "fei/entities",
