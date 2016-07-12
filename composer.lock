@@ -387,16 +387,16 @@
         },
         {
             "name": "fei/api-client",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/api-client.git",
-                "reference": "96ef54dbd088d3040fb9a16cc9ebf8b426232766"
+                "reference": "7108a92a666768eb61dc9398a822ae71b0a0edee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/api-client/zipball/96ef54dbd088d3040fb9a16cc9ebf8b426232766",
-                "reference": "96ef54dbd088d3040fb9a16cc9ebf8b426232766",
+                "url": "https://api.github.com/repos/flash-global/api-client/zipball/7108a92a666768eb61dc9398a822ae71b0a0edee",
+                "reference": "7108a92a666768eb61dc9398a822ae71b0a0edee",
                 "shasum": ""
             },
             "require": {
@@ -422,7 +422,7 @@
                 "source": "https://github.com/flash-global/api-client/tree/develop",
                 "issues": "https://github.com/flash-global/api-client/issues"
             },
-            "time": "2016-07-07 12:56:21"
+            "time": "2016-07-08 09:23:12"
         },
         {
             "name": "fei/entities",
