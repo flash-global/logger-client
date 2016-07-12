@@ -50,7 +50,7 @@ class LoggerTest extends \Codeception\Test\Unit
 
         $notification = new Notification();
         $notification->setMessage($this->faker->sentence);
-        $notification->setLevel(Notification::INFO);
+        $notification->setLevel(Notification::LVL_INFO);
 
         $transport = $this->createMock(TransportInterface::class);
         $transport->expects($this->once())->method('send');

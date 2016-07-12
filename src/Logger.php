@@ -38,7 +38,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
     public function __construct(array $options = array())
     {
         $this->exceptionLogFile = '/tmp/logger.log';
-        $this->filterLevel = isset($options[self::PARAMETER_FILTER]) ? $options[self::PARAMETER_FILTER] : Notification::DEBUG;
+        $this->filterLevel = isset($options[self::PARAMETER_FILTER]) ? $options[self::PARAMETER_FILTER] : Notification::LVL_DEBUG;
         $this->haveBackTrace = isset($options[self::PARAMETER_BACKTRACE]) ? $options[self::PARAMETER_BACKTRACE] : true;
         if(isset($options[self::PARAMETER_BASEURL]) ) {
             $this->setBaseUrl($options[self::PARAMETER_BASEURL]);
@@ -57,7 +57,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
             if (is_string($notif)) {
                 $notification = new Notification();
                 $notification->setMessage($notif)
-                    ->setLevel(Notification::INFO)
+                    ->setLevel(Notification::LVL_INFO)
                     ->setCategory(Notification::BUSINESS);
             }else{
                 $notification = $notif;

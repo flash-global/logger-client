@@ -426,16 +426,16 @@
         },
         {
             "name": "fei/entities",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/entities.git",
-                "reference": "12eec5928f115d75f13fcbfe756a58baa58e43f0"
+                "reference": "c2c64909056661bbb732d629b4e6913d97295f11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/entities/zipball/12eec5928f115d75f13fcbfe756a58baa58e43f0",
-                "reference": "12eec5928f115d75f13fcbfe756a58baa58e43f0",
+                "url": "https://api.github.com/repos/flash-global/entities/zipball/c2c64909056661bbb732d629b4e6913d97295f11",
+                "reference": "c2c64909056661bbb732d629b4e6913d97295f11",
                 "shasum": ""
             },
             "require-dev": {
@@ -456,20 +456,20 @@
                 "source": "https://github.com/flash-global/entities/tree/develop",
                 "issues": "https://github.com/flash-global/entities/issues"
             },
-            "time": "2016-07-04 15:21:46"
+            "time": "2016-07-12 14:16:00"
         },
         {
             "name": "fei/logger-common",
-            "version": "v1.0.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/logger-common.git",
-                "reference": "f89aa51153f7e72cd29359036f7157f3370574d1"
+                "reference": "a4b00ab80c1e325875cf8ad386e0185baf882426"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/logger-common/zipball/f89aa51153f7e72cd29359036f7157f3370574d1",
-                "reference": "f89aa51153f7e72cd29359036f7157f3370574d1",
+                "url": "https://api.github.com/repos/flash-global/logger-common/zipball/a4b00ab80c1e325875cf8ad386e0185baf882426",
+                "reference": "a4b00ab80c1e325875cf8ad386e0185baf882426",
                 "shasum": ""
             },
             "require": {
@@ -503,10 +503,10 @@
                 "logger"
             ],
             "support": {
-                "source": "https://github.com/flash-global/logger-common/tree/develop",
+                "source": "https://github.com/flash-global/logger-common/tree/master",
                 "issues": "https://github.com/flash-global/logger-common/issues"
             },
-            "time": "2016-07-06 11:41:29"
+            "time": "2016-07-12 14:13:58"
         },
         {
             "name": "guzzle/guzzle",
