@@ -19,8 +19,7 @@
   },
   "require": {
       "fei/api-client": "1.*",
-      "fei/logger-common": "1.*",
-      "doctrine/orm": "~2.5"	
+      "fei/logger-common": "1.*"
   },
   "repositories": [
     {
