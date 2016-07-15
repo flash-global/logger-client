@@ -59,6 +59,19 @@ class LoggerTest extends \Codeception\Test\Unit
         $logger->notify($notification);
     }
 
+    public function testAutoCommit()
+    {
+        $logger = (new Logger())->enableAutoCommit();
+        $logger->setBaseUrl('http://azeaze.fr/');
 
+        $notification = new Notification();
+        $notification->setMessage($this->faker->sentence);
+        $notification->setLevel(Notification::LVL_INFO);
 
+        $transport = $this->createMock(TransportInterface::class);
+        $transport->expects($this->never())->method('send');
+        $logger->setTransport($transport);
+
+        $logger->notify($notification);
+    }
 }
