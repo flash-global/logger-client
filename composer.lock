@@ -81,25 +81,25 @@
         },
         {
             "name": "fei/logger-common",
-            "version": "v1.1.5",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/logger-common.git",
-                "reference": "13f3a6ffad57017491d02b9ec8c2d12e66dfd11d"
+                "reference": "d925a229682bcf221767a1762f0e381ff959d05b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/logger-common/zipball/13f3a6ffad57017491d02b9ec8c2d12e66dfd11d",
-                "reference": "13f3a6ffad57017491d02b9ec8c2d12e66dfd11d",
+                "url": "https://api.github.com/repos/flash-global/logger-common/zipball/d925a229682bcf221767a1762f0e381ff959d05b",
+                "reference": "d925a229682bcf221767a1762f0e381ff959d05b",
                 "shasum": ""
             },
             "require": {
+                "doctrine/orm": ">=2.5",
                 "fei/entities": "1.*",
                 "league/fractal": "^0.13.0"
             },
             "require-dev": {
-                "codeception/codeception": "2.*",
-                "doctrine/orm": ">=2.5"
+                "codeception/codeception": "2.*"
             },
             "type": "library",
             "autoload": {
@@ -124,10 +124,10 @@
                 "logger"
             ],
             "support": {
-                "source": "https://github.com/flash-global/logger-common/tree/master",
+                "source": "https://github.com/flash-global/logger-common/tree/v1.1.6",
                 "issues": "https://github.com/flash-global/logger-common/issues"
             },
-            "time": "2016-07-15 13:04:00"
+            "time": "2016-07-15 13:33:42"
         },
         {
             "name": "guzzle/guzzle",
