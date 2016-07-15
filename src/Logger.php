@@ -55,7 +55,7 @@
          *
          * @return $this|\Fei\ApiClient\ResponseDescriptor
          */
-        public function notify($message, array $params = [])
+        public function notify($message, array $params = array())
         {
             try
             {
