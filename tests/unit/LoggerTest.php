@@ -2,7 +2,7 @@
 
 use Fei\ApiClient\Transport\TransportInterface;
 use Fei\Service\Logger\Entity\Notification;
-use Pricer\Logger\Client\Logger;
+use Fei\Service\Logger\Client\Logger;
 
 class LoggerTest extends \Codeception\Test\Unit
 {
