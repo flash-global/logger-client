@@ -66,7 +66,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
             }
 
             if ($this->includeBacktrace) {
-                $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 3);
+                $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT);
                 unset($backtrace[0]);
                 $notification->setBackTrace($backtrace);
             }
