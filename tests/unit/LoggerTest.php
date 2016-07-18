@@ -69,7 +69,7 @@ class LoggerTest extends \Codeception\Test\Unit
         $notification->setLevel(Notification::LVL_INFO);
 
         $transport = $this->createMock(TransportInterface::class);
-        $transport->expects($this->once())->method('send');
+        $transport->expects($this->never())->method('send');
         $transport->expects($this->never())->method('sendMany');
         $logger->setTransport($transport);
 
