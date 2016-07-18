@@ -10,7 +10,7 @@
   "license": "Proprietary",
   "autoload": {
     "psr-4": {
-      "Pricer\\Logger\\Client\\": "src/"
+      "Fei\\Service\\Logger\\Client\\": "src/"
     }
   },
   "require-dev": {

@@ -1,18 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Neofox
- * Date: 21/06/2016
- * Time: 14:13
- */
 
 require __DIR__ . '/../vendor/autoload.php';
 
 use Fei\Service\Logger\Entity\Notification;
-use Pricer\Logger\Client\Logger;
+use Fei\Service\Logger\Client\Logger;
 
 $start_time = microtime(true);
-
+    
 $logger = new Logger([Logger::PARAMETER_BASEURL =>'http://logger.test.flash-global.net']);
 // $logger = new Logger([Logger::PARAMETER_BASEURL =>'http://localhost:8080']);
 $logger->setTransport(new Fei\ApiClient\Transport\BasicTransport());

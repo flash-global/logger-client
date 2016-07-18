@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Neofox
- * Date: 21/06/2016
- * Time: 13:42
- */
 
-namespace Pricer\Logger\Client;
+namespace Fei\Service\Logger\Client;
 
 
 interface LoggerInterface
