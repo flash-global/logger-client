@@ -47,16 +47,16 @@
         },
         {
             "name": "fei/entities",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/entities.git",
-                "reference": "d2e632223448fe37f478508eb3081a1f97b2d427"
+                "reference": "bf2aa1ae8c0c49cb6989c58c721a45e8692a52ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/entities/zipball/d2e632223448fe37f478508eb3081a1f97b2d427",
-                "reference": "d2e632223448fe37f478508eb3081a1f97b2d427",
+                "url": "https://api.github.com/repos/flash-global/entities/zipball/bf2aa1ae8c0c49cb6989c58c721a45e8692a52ab",
+                "reference": "bf2aa1ae8c0c49cb6989c58c721a45e8692a52ab",
                 "shasum": ""
             },
             "require-dev": {
@@ -74,31 +74,31 @@
             ],
             "description": "Entities descriptors and helpers",
             "support": {
-                "source": "https://github.com/flash-global/entities/tree/v1.0.3",
+                "source": "https://github.com/flash-global/entities/tree/v1.0.4",
                 "issues": "https://github.com/flash-global/entities/issues"
             },
-            "time": "2016-07-18 08:19:41"
+            "time": "2016-07-18 12:12:09"
         },
         {
             "name": "fei/logger-common",
-            "version": "v1.1.8",
+            "version": "v1.1.10",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/logger-common.git",
-                "reference": "45580d8573a8942abc637885f1a93f9f8daefa32"
+                "reference": "9a7ecc08e5d0be6d75dc4871b1f213eaad4828c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/logger-common/zipball/45580d8573a8942abc637885f1a93f9f8daefa32",
-                "reference": "45580d8573a8942abc637885f1a93f9f8daefa32",
+                "url": "https://api.github.com/repos/flash-global/logger-common/zipball/9a7ecc08e5d0be6d75dc4871b1f213eaad4828c8",
+                "reference": "9a7ecc08e5d0be6d75dc4871b1f213eaad4828c8",
                 "shasum": ""
             },
             "require": {
-                "fei/entities": "1.*",
+                "fei/entities": "^1.0.3",
                 "league/fractal": "^0.13.0"
             },
             "require-dev": {
-                "codeception/codeception": "2.*",
+                "codeception/codeception": "^2.2",
                 "doctrine/orm": ">=2.5"
             },
             "type": "library",
@@ -112,11 +112,6 @@
                     "name": "Gauthier Delamarre",
                     "email": "gauthier@opcoding.eu",
                     "role": "lead"
-                },
-                {
-                    "name": "Jerome Schaeffer",
-                    "email": "jsc@opcoding.eu",
-                    "role": "developer"
                 }
             ],
             "description": "Flash applicative logger - common components",
@@ -124,10 +119,10 @@
                 "logger"
             ],
             "support": {
-                "source": "https://github.com/flash-global/logger-common/tree/v1.1.8",
+                "source": "https://github.com/flash-global/logger-common/tree/master",
                 "issues": "https://github.com/flash-global/logger-common/issues"
             },
-            "time": "2016-07-15 15:03:35"
+            "time": "2016-07-18 13:08:38"
         },
         {
             "name": "guzzle/guzzle",
