@@ -89,12 +89,30 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
             return $this->send($request, ApiRequestOption::NO_RESPONSE);
         } catch (\Exception $e) {
-            file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
+            @file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
         }
 
         return false;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function commit()
+    {
+        try {
+            parent::commit();
+        } catch (\Exception $e) {
+            @file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
+        }
+    }
+
+    /**
+     * @param Notification $notification
+     * @param array        $params
+     *
+     * @return Notification
+     */
     protected function prepareNotification(Notification $notification, $params = array())
     {
         $data = array_filter($notification->toArray());
