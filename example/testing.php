@@ -26,7 +26,12 @@ $notification->setContext(
 );
 
 /** @var \Fei\ApiClient\ResponseDescriptor $log */
-$log = $logger->notify($notification, ['context' => ['x' => 'y']]);
+$log = null;
+$notify = function () use ($logger, $notification, &$log) {
+    $log = $logger->notify($notification, ['context' => ['x' => 'y']]);
+};
+
+$notify();
 
 $end_time = microtime(true);
 
