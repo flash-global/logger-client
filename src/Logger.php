@@ -50,6 +50,8 @@ class Logger extends AbstractApiClient implements LoggerInterface
     public function notify($message, array $params = array())
     {
         try {
+            $this->addErrorHandler();
+
             if (is_string($message)) {
                 $notification = new Notification();
                 $notification->setMessage($message)
@@ -81,8 +83,13 @@ class Logger extends AbstractApiClient implements LoggerInterface
                 );
             }
 
+            $serialized = @json_encode($notification->toArray());
+            if (is_null($serialized)) {
+                return false;
+            }
+
             $request = new RequestDescriptor();
-            $request->addBodyParam('notification', json_encode($notification->toArray()));
+            $request->addBodyParam('notification', $serialized);
 
             $request->setUrl($this->buildUrl('/api/notifications'));
             $request->setMethod('POST');
@@ -127,6 +134,18 @@ class Logger extends AbstractApiClient implements LoggerInterface
         $notification->hydrate($data);
 
         return $notification;
+    }
+
+    /**
+     * Add a error handler
+     */
+    protected function addErrorHandler()
+    {
+        $instance = $this;
+        set_error_handler(function($errno , $errstr, $errfile, $errline) use ($instance) {
+            $message = sprintf('%d: %s - File: %s - Line: %d', $errno, $errstr, $errfile, $errline);
+            throw new \Exception($message, $errno);
+        });
     }
 
     /**
