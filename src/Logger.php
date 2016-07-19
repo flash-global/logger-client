@@ -125,6 +125,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
             $this->restoreErrorHandler();
         } catch (\Exception $e) {
             @file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
+            $this->restoreErrorHandler();
         }
     }
 
@@ -167,7 +168,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
      */
     protected function restoreErrorHandler()
     {
-        set_error_handler($this->previousErrorHandler);
+        restore_error_handler();
     }
 
     /**
