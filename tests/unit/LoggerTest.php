@@ -27,7 +27,7 @@ class LoggerTest extends \Codeception\Test\Unit
         $logger = new Logger();
 
         $transport = $this->createMock(TransportInterface::class);
-        $transport->expects($this->once())->method('sendMany');
+        $transport->expects($this->never())->method('sendMany');
         $logger->setTransport($transport);
 
         $logger->begin();
@@ -50,7 +50,7 @@ class LoggerTest extends \Codeception\Test\Unit
 
         $notification = new Notification();
         $notification->setMessage($this->faker->sentence);
-        $notification->setLevel(Notification::LVL_INFO);
+        $notification->setLevel(Notification::LVL_ERROR);
 
         $transport = $this->createMock(TransportInterface::class);
         $transport->expects($this->once())->method('send');
@@ -66,7 +66,7 @@ class LoggerTest extends \Codeception\Test\Unit
 
         $notification = new Notification();
         $notification->setMessage($this->faker->sentence);
-        $notification->setLevel(Notification::LVL_INFO);
+        $notification->setLevel(Notification::LVL_ERROR);
 
         $transport = $this->createMock(TransportInterface::class);
         $transport->expects($this->never())->method('send');
