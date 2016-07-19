@@ -26,6 +26,11 @@ class Logger extends AbstractApiClient implements LoggerInterface
     protected $includeBacktrace = true;
 
     /**
+     * @var mixed
+     */
+    protected $previousErrorHandler;
+
+    /**
      * Logger constructor.
      *
      * @param array $options
@@ -50,7 +55,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
     public function notify($message, array $params = array())
     {
         try {
-            $this->addErrorHandler();
+            $this->registerErrorHandler();
 
             if (is_string($message)) {
                 $notification = new Notification();
@@ -94,7 +99,11 @@ class Logger extends AbstractApiClient implements LoggerInterface
             $request->setUrl($this->buildUrl('/api/notifications'));
             $request->setMethod('POST');
 
-            return $this->send($request, ApiRequestOption::NO_RESPONSE);
+            $return = $this->send($request, ApiRequestOption::NO_RESPONSE);
+
+            $this->restoreErrorHandler();
+
+            return $return;
         } catch (\Exception $e) {
             @file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
         }
@@ -108,7 +117,11 @@ class Logger extends AbstractApiClient implements LoggerInterface
     public function commit()
     {
         try {
+            $this->registerErrorHandler();
+
             parent::commit();
+
+            $this->restoreErrorHandler();
         } catch (\Exception $e) {
             @file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
         }
@@ -139,13 +152,21 @@ class Logger extends AbstractApiClient implements LoggerInterface
     /**
      * Add a error handler
      */
-    protected function addErrorHandler()
+    protected function registerErrorHandler()
     {
         $instance = $this;
-        set_error_handler(function($errno , $errstr, $errfile, $errline) use ($instance) {
+        $this->previousErrorHandler = set_error_handler(function($errno , $errstr, $errfile, $errline) use ($instance) {
             $message = sprintf('%d: %s - File: %s - Line: %d', $errno, $errstr, $errfile, $errline);
             throw new \Exception($message, $errno);
         });
+    }
+
+    /**
+     * Restore previous error handler
+     */
+    protected function restoreErrorHandler()
+    {
+        set_error_handler($this->previousErrorHandler);
     }
 
     /**
