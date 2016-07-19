@@ -39,7 +39,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
     public function __construct(array $options = array())
     {
         $this->exceptionLogFile = '/tmp/logger.log';
-        $this->filterLevel = isset($options[self::PARAMETER_FILTER]) ? $options[self::PARAMETER_FILTER] : Notification::LVL_DEBUG;
+        $this->filterLevel = isset($options[self::PARAMETER_FILTER]) ? $options[self::PARAMETER_FILTER] : Notification::LVL_ERROR;
         $this->includeBacktrace = isset($options[self::PARAMETER_BACKTRACE]) ? $options[self::PARAMETER_BACKTRACE] : true;
         if (isset($options[self::PARAMETER_BASEURL])) {
             $this->setBaseUrl($options[self::PARAMETER_BASEURL]);
@@ -47,8 +47,8 @@ class Logger extends AbstractApiClient implements LoggerInterface
     }
 
     /**
-     * @param       $message
-     * @param array $params
+     * @param string|Notification $message
+     * @param array               $params
      *
      * @return bool|\Fei\ApiClient\ResponseDescriptor
      */
