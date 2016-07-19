@@ -138,4 +138,24 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
         return $uname['nodename'];
     }
+
+    /**
+     * @return int
+     */
+    public function getFilterLevel()
+    {
+        return $this->filterLevel;
+    }
+
+    /**
+     * @param int $filterLevel
+     *
+     * @return $this
+     */
+    public function setFilterLevel($filterLevel)
+    {
+        $this->filterLevel = $filterLevel;
+
+        return $this;
+    }
 }
