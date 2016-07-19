@@ -69,6 +69,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
             $this->prepareNotification($notification, $params);
 
             if ($notification->getLevel() < $this->filterLevel) {
+                $this->restoreErrorHandler();
                 return false;
             }
 
@@ -90,6 +91,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
             $serialized = @json_encode($notification->toArray());
             if (is_null($serialized)) {
+                $this->restoreErrorHandler();
                 return false;
             }
 
