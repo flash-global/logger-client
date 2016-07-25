@@ -15,7 +15,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
     const OPTION_FILTER = 'filterLevel';
 
     const OPTION_BACKTRACE = 'includeBackTrace';
-    
+
     const OPTION_LOGFILE = 'exceptionLogFile';
 
     /** @var  int */
@@ -31,17 +31,6 @@ class Logger extends AbstractApiClient implements LoggerInterface
      * @var mixed
      */
     protected $previousErrorHandler;
-
-    /**
-     * Logger constructor.
-     *
-     * @param array $options
-     *
-     */
-    public function __construct(array $options = array())
-    {
-        $this->setOptions($options);
-    }
 
     /**
      * @param string|Notification $message
