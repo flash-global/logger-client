@@ -85,7 +85,7 @@ class LoggerTest extends \Codeception\Test\Unit
         $notification->setMessage($this->faker->sentence);
         $notification->setLevel(Notification::LVL_ERROR);
         
-        $logger->setTransport($this->createMock(TransportInterface::class));
+        $logger->setTransport($this->createMock(SyncTransportInterface::class));
         
         $notify = function () use ($logger, $notification)
         {
