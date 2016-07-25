@@ -14,7 +14,7 @@ $logger->setTransport(new Fei\ApiClient\Transport\BasicTransport());
 
 $notification = new Notification();
 $notification->setMessage('Hello World!');
-$notification->setLevel(Notification::LVL_DEBUG);
+$notification->setLevel(Notification::LVL_ERROR);
 $notification->setCategory(Notification::PERFORMANCE);
 $notification->setContext(
    [
