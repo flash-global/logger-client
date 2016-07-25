@@ -10,17 +10,19 @@ use Fei\Service\Logger\Validator\NotificationValidator;
 
 class Logger extends AbstractApiClient implements LoggerInterface
 {
-    const PARAMETER_BASEURL = 'baseUrl';
+    const OPTION_BASEURL = 'baseUrl';
 
-    const PARAMETER_FILTER = 'filter';
+    const OPTION_FILTER = 'filterLevel';
 
-    const PARAMETER_BACKTRACE = 'includedBackTrace';
+    const OPTION_BACKTRACE = 'includeBackTrace';
+    
+    const OPTION_LOGFILE = 'exceptionLogFile';
 
     /** @var  int */
-    protected $filterLevel;
+    protected $filterLevel = Notification::LVL_ERROR;
 
     /** @var  string */
-    protected $exceptionLogFile;
+    protected $exceptionLogFile = '/tmp/logger.log';
 
     /** @var bool */
     protected $includeBacktrace = true;
@@ -38,12 +40,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
      */
     public function __construct(array $options = array())
     {
-        $this->exceptionLogFile = '/tmp/logger.log';
-        $this->filterLevel = isset($options[self::PARAMETER_FILTER]) ? $options[self::PARAMETER_FILTER] : Notification::LVL_ERROR;
-        $this->includeBacktrace = isset($options[self::PARAMETER_BACKTRACE]) ? $options[self::PARAMETER_BACKTRACE] : true;
-        if (isset($options[self::PARAMETER_BASEURL])) {
-            $this->setBaseUrl($options[self::PARAMETER_BASEURL]);
-        }
+        $this->setOptions($options);
     }
 
     /**
