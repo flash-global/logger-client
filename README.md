@@ -30,8 +30,7 @@ Notes:
 
 A Logger client should always be initialized by a dependency injection component, since it requires at least one dependency, which is the transport. Moreover, the BASEURL parameter should also depends on environment.
 
-```
-<?php
+```php
 // sample configuration for production environment
 $logger = new Logger(array(
                             Logger::OPTION_BASEURL  => 'http://logger.flash-global.net',
@@ -55,8 +54,7 @@ $logger->setAsyncTransport($asyncTransport);
 
 Once you have set up the Logger, you can start pushing notifications by calling the `notify()` method on the Logger:
 
-```
-<?php
+```php
 
 $logger = $container->get('logger');
 
@@ -70,8 +68,7 @@ While its possible to pass more than just the level using the second (array) par
 
 The more reliable way to push a notification is to instantiate it by yourself, and then send it through `notify()`, that will also accept Notification instances:
 
-```
-<?php
+```php
 
 $logger = $container->get('logger');
 
