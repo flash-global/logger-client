@@ -74,9 +74,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
             }
 
             if ($this->includeBacktrace) {
-                $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT);
-                unset($backtrace[0]);
-                $notification->setBackTrace($backtrace);
+                $notification->setBackTrace($this->getBackTrace());
             }
 
             $validator = new NotificationValidator();
@@ -132,6 +130,26 @@ class Logger extends AbstractApiClient implements LoggerInterface
     }
 
     /**
+     * @return int
+     */
+    public function getFilterLevel()
+    {
+        return $this->filterLevel;
+    }
+
+    /**
+     * @param int $filterLevel
+     *
+     * @return $this
+     */
+    public function setFilterLevel($filterLevel)
+    {
+        $this->filterLevel = $filterLevel;
+
+        return $this;
+    }
+
+    /**
      * @param Notification $notification
      * @param array        $params
      *
@@ -184,22 +202,41 @@ class Logger extends AbstractApiClient implements LoggerInterface
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getFilterLevel()
+    protected function getBackTrace()
     {
-        return $this->filterLevel;
-    }
+        $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT);
+        unset($backtrace[0]);
 
-    /**
-     * @param int $filterLevel
-     *
-     * @return $this
-     */
-    public function setFilterLevel($filterLevel)
-    {
-        $this->filterLevel = $filterLevel;
+        $sanitized = array();
 
-        return $this;
+        foreach ($backtrace as $key => $trace) {
+            if (isset($trace['file']) && $trace['line']) {
+                $sanitized[$key]['file'] = $trace['file'] . ':' . $trace['line'];
+            }
+
+            if (isset($trace['class'])) {
+                $sanitized[$key]['method'] = $trace['class'] . $trace['type'] . $trace['function'];
+            } elseif (isset($trace['function'])) {
+                $sanitized[$key]['function'] = $trace['function'];
+            }
+
+            if (!empty($trace['args'])) {
+                foreach ($trace['args'] as $arg) {
+                    if (is_scalar($arg)) {
+                        $sanitized[$key]['args'][] = sprintf('(%s) %s', gettype($arg), (string) $arg);
+                    } elseif (is_array($arg)) {
+                        $sanitized[$key]['args'][] = sprintf('array(%d)', count($arg));
+                    } elseif (is_object($arg)) {
+                        $sanitized[$key]['args'][] = sprintf('Instance of %s', get_class($arg));
+                    } elseif (is_resource($arg)) {
+                        $sanitized[$key]['args'][] = sprintf('(resource) %s', get_resource_type($arg));
+                    }
+                }
+            }
+        }
+
+        return $sanitized;
     }
 }
