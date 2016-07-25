@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8c9de3c8ea124efe37342e4873dfa559",
-    "content-hash": "88cda0b25a6ee47e053ef51300c53ffc",
+    "hash": "602e92ea8a031611efb42eea1d10d590",
+    "content-hash": "cabc5cb57ddfbf73e552a9a3f5b0e34a",
     "packages": [
         {
             "name": "fei/api-client",
@@ -81,16 +81,16 @@
         },
         {
             "name": "fei/logger-common",
-            "version": "v1.1.13",
+            "version": "v1.1.20",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/logger-common.git",
-                "reference": "a5fb93a154b6b1b3afedde8df9166bc0b0d52f63"
+                "reference": "5a8cab6fcd5557a0a5da72429dc8ea900da61c8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/logger-common/zipball/a5fb93a154b6b1b3afedde8df9166bc0b0d52f63",
-                "reference": "a5fb93a154b6b1b3afedde8df9166bc0b0d52f63",
+                "url": "https://api.github.com/repos/flash-global/logger-common/zipball/5a8cab6fcd5557a0a5da72429dc8ea900da61c8b",
+                "reference": "5a8cab6fcd5557a0a5da72429dc8ea900da61c8b",
                 "shasum": ""
             },
             "require": {
@@ -119,10 +119,10 @@
                 "logger"
             ],
             "support": {
-                "source": "https://github.com/flash-global/logger-common/tree/v1.1.13",
+                "source": "https://github.com/flash-global/logger-common/tree/v1.1.20",
                 "issues": "https://github.com/flash-global/logger-common/issues"
             },
-            "time": "2016-07-18 14:44:49"
+            "time": "2016-07-25 09:28:32"
         },
         {
             "name": "guzzle/guzzle",
@@ -405,16 +405,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "2.2.2",
+            "version": "2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "8d80bb4ec7470e8df5de0e4c401785bc3fa1f4f6"
+                "reference": "34c268ae5872105c0c218296487650ab08e3991b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/8d80bb4ec7470e8df5de0e4c401785bc3fa1f4f6",
-                "reference": "8d80bb4ec7470e8df5de0e4c401785bc3fa1f4f6",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/34c268ae5872105c0c218296487650ab08e3991b",
+                "reference": "34c268ae5872105c0c218296487650ab08e3991b",
                 "shasum": ""
             },
             "require": {
@@ -492,7 +492,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2016-06-29 00:59:28"
+            "time": "2016-07-24 19:31:22"
         },
         {
             "name": "doctrine/annotations",
@@ -1852,16 +1852,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.4.6",
+            "version": "5.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "2f1fc94b77ea6418bd6a06c64a1dac0645fbce59"
+                "reference": "6c8a756c17a1a92a066c99860eb57922e8b723da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2f1fc94b77ea6418bd6a06c64a1dac0645fbce59",
-                "reference": "2f1fc94b77ea6418bd6a06c64a1dac0645fbce59",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6c8a756c17a1a92a066c99860eb57922e8b723da",
+                "reference": "6c8a756c17a1a92a066c99860eb57922e8b723da",
                 "shasum": ""
             },
             "require": {
@@ -1926,7 +1926,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-06-16 06:01:15"
+            "time": "2016-07-21 06:55:27"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
