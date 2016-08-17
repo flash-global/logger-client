@@ -110,7 +110,10 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
             $this->restoreErrorHandler();
         } catch (\Exception $e) {
-            @file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
+            if (is_writable($this->exceptionLogFile)) {
+                @file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
+            }
+
             $this->restoreErrorHandler();
         }
     }
@@ -149,6 +152,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
         $params += array('origin' => php_sapi_name() == 'cli' ? 'cli' : 'http');
         $params += array('reported_at' => new \DateTime());
+        $params += array('server' => $this->getServerName());
 
         $data += $params;
 
@@ -163,10 +167,12 @@ class Logger extends AbstractApiClient implements LoggerInterface
     protected function registerErrorHandler()
     {
         $instance = $this;
-        $this->previousErrorHandler = set_error_handler(function($errno , $errstr, $errfile, $errline) use ($instance) {
-            $message = sprintf('%d: %s - File: %s - Line: %d', $errno, $errstr, $errfile, $errline);
-            throw new \Exception($message, $errno);
-        });
+        $this->previousErrorHandler = set_error_handler(
+            function ($errno, $errstr, $errfile, $errline) use ($instance) {
+                $message = sprintf('%d: %s - File: %s - Line: %d', $errno, $errstr, $errfile, $errline);
+                throw new \Exception($message, $errno);
+            }
+        );
     }
 
     /**
