@@ -1,31 +1,30 @@
 {
-  "name": "fei/logger-client",
-  "authors": [
-    {
-      "name": "Jerome Schaeffer",
-      "email": "jsc@opcoding.eu"
-    }
-  ],
-  "type": "library",
-  "license": "Proprietary",
-  "autoload": {
-    "psr-4": {
-      "Fei\\Service\\Logger\\Client\\": "src/"
-    }
-  },
-  "require-dev": {
-    "fzaninotto/faker": "^1.6",
-    "codeception/codeception": "^2.2",
-    "doctrine/orm": ">=2.5"
-  },
-  "require": {
-      "fei/api-client": "^1.1.0",
-      "fei/logger-common": "^1.1.20"
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://composer.flash-global.net"
-    }
-  ]
+    "name": "fei/logger-client",
+    "type": "library",
+    "license": "Proprietary",
+    "autoload": {
+        "psr-4": {
+            "Fei\\Service\\Logger\\Client\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jerome Schaeffer",
+            "email": "jsc@opcoding.eu"
+        }
+    ],
+    "require": {
+        "fei/api-client": "^1.1.0",
+        "fei/logger-common": "^1.1.20"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "^1.6",
+        "codeception/codeception": "^2.2"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://composer.flash-global.net"
+        }
+    ]
 }
