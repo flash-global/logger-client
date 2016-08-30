@@ -11,20 +11,23 @@ use Fei\Service\Logger\Validator\NotificationValidator;
 class Logger extends AbstractApiClient implements LoggerInterface
 {
     const OPTION_BASEURL = 'baseUrl';
-
     const OPTION_FILTER = 'filterLevel';
-
-    const OPTION_BACKTRACE = 'includeBackTrace';
-
+    const OPTION_BACKTRACE = 'includeBacktrace';
     const OPTION_LOGFILE = 'exceptionLogFile';
 
-    /** @var  int */
+    /**
+     * @var int
+     */
     protected $filterLevel = Notification::LVL_ERROR;
 
-    /** @var  string */
+    /**
+     * @var string
+     */
     protected $exceptionLogFile = '/tmp/logger.log';
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $includeBacktrace = true;
 
     /**
@@ -199,7 +202,11 @@ class Logger extends AbstractApiClient implements LoggerInterface
     protected function getBackTrace()
     {
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT);
-        unset($backtrace[0]);
+
+        $methodExcluded = [
+            'Fei\Service\Logger\Client\Logger->getBackTrace',
+            'Fei\Service\Logger\Client\Logger->notify'
+        ];
 
         $sanitized = array();
 
@@ -210,6 +217,10 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
             if (isset($trace['class'])) {
                 $sanitized[$key]['method'] = $trace['class'] . $trace['type'] . $trace['function'];
+                if (in_array($sanitized[$key]['method'], $methodExcluded)) {
+                    unset($sanitized[$key]);
+                    continue;
+                }
             } elseif (isset($trace['function'])) {
                 $sanitized[$key]['function'] = $trace['function'];
             }
@@ -229,6 +240,6 @@ class Logger extends AbstractApiClient implements LoggerInterface
             }
         }
 
-        return $sanitized;
+        return array_values($sanitized);
     }
 }
