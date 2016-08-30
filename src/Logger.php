@@ -10,17 +10,19 @@ use Fei\Service\Logger\Validator\NotificationValidator;
 
 class Logger extends AbstractApiClient implements LoggerInterface
 {
-    const PARAMETER_BASEURL = 'baseUrl';
+    const OPTION_BASEURL = 'baseUrl';
 
-    const PARAMETER_FILTER = 'filter';
+    const OPTION_FILTER = 'filterLevel';
 
-    const PARAMETER_BACKTRACE = 'includedBackTrace';
+    const OPTION_BACKTRACE = 'includeBackTrace';
+
+    const OPTION_LOGFILE = 'exceptionLogFile';
 
     /** @var  int */
-    protected $filterLevel;
+    protected $filterLevel = Notification::LVL_ERROR;
 
     /** @var  string */
-    protected $exceptionLogFile;
+    protected $exceptionLogFile = '/tmp/logger.log';
 
     /** @var bool */
     protected $includeBacktrace = true;
@@ -29,22 +31,6 @@ class Logger extends AbstractApiClient implements LoggerInterface
      * @var mixed
      */
     protected $previousErrorHandler;
-
-    /**
-     * Logger constructor.
-     *
-     * @param array $options
-     *
-     */
-    public function __construct(array $options = array())
-    {
-        $this->exceptionLogFile = '/tmp/logger.log';
-        $this->filterLevel = isset($options[self::PARAMETER_FILTER]) ? $options[self::PARAMETER_FILTER] : Notification::LVL_ERROR;
-        $this->includeBacktrace = isset($options[self::PARAMETER_BACKTRACE]) ? $options[self::PARAMETER_BACKTRACE] : true;
-        if (isset($options[self::PARAMETER_BASEURL])) {
-            $this->setBaseUrl($options[self::PARAMETER_BASEURL]);
-        }
-    }
 
     /**
      * @param string|Notification $message
@@ -74,9 +60,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
             }
 
             if ($this->includeBacktrace) {
-                $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT);
-                unset($backtrace[0]);
-                $notification->setBackTrace($backtrace);
+                $notification->setBackTrace($this->getBackTrace());
             }
 
             $validator = new NotificationValidator();
@@ -126,9 +110,32 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
             $this->restoreErrorHandler();
         } catch (\Exception $e) {
-            @file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
+            if (is_writable($this->exceptionLogFile)) {
+                @file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
+            }
+
             $this->restoreErrorHandler();
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getFilterLevel()
+    {
+        return $this->filterLevel;
+    }
+
+    /**
+     * @param int $filterLevel
+     *
+     * @return $this
+     */
+    public function setFilterLevel($filterLevel)
+    {
+        $this->filterLevel = $filterLevel;
+
+        return $this;
     }
 
     /**
@@ -145,6 +152,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
         $params += array('origin' => php_sapi_name() == 'cli' ? 'cli' : 'http');
         $params += array('reported_at' => new \DateTime());
+        $params += array('server' => $this->getServerName());
 
         $data += $params;
 
@@ -159,10 +167,12 @@ class Logger extends AbstractApiClient implements LoggerInterface
     protected function registerErrorHandler()
     {
         $instance = $this;
-        $this->previousErrorHandler = set_error_handler(function($errno , $errstr, $errfile, $errline) use ($instance) {
-            $message = sprintf('%d: %s - File: %s - Line: %d', $errno, $errstr, $errfile, $errline);
-            throw new \Exception($message, $errno);
-        });
+        $this->previousErrorHandler = set_error_handler(
+            function ($errno, $errstr, $errfile, $errline) use ($instance) {
+                $message = sprintf('%d: %s - File: %s - Line: %d', $errno, $errstr, $errfile, $errline);
+                throw new \Exception($message, $errno);
+            }
+        );
     }
 
     /**
@@ -184,22 +194,41 @@ class Logger extends AbstractApiClient implements LoggerInterface
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getFilterLevel()
+    protected function getBackTrace()
     {
-        return $this->filterLevel;
-    }
+        $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT);
+        unset($backtrace[0]);
 
-    /**
-     * @param int $filterLevel
-     *
-     * @return $this
-     */
-    public function setFilterLevel($filterLevel)
-    {
-        $this->filterLevel = $filterLevel;
+        $sanitized = array();
 
-        return $this;
+        foreach ($backtrace as $key => $trace) {
+            if (isset($trace['file']) && $trace['line']) {
+                $sanitized[$key]['file'] = $trace['file'] . ':' . $trace['line'];
+            }
+
+            if (isset($trace['class'])) {
+                $sanitized[$key]['method'] = $trace['class'] . $trace['type'] . $trace['function'];
+            } elseif (isset($trace['function'])) {
+                $sanitized[$key]['function'] = $trace['function'];
+            }
+
+            if (!empty($trace['args'])) {
+                foreach ($trace['args'] as $arg) {
+                    if (is_scalar($arg)) {
+                        $sanitized[$key]['args'][] = sprintf('(%s) %s', gettype($arg), (string) $arg);
+                    } elseif (is_array($arg)) {
+                        $sanitized[$key]['args'][] = sprintf('array(%d)', count($arg));
+                    } elseif (is_object($arg)) {
+                        $sanitized[$key]['args'][] = sprintf('Instance of %s', get_class($arg));
+                    } elseif (is_resource($arg)) {
+                        $sanitized[$key]['args'][] = sprintf('(resource) %s', get_resource_type($arg));
+                    }
+                }
+            }
+        }
+
+        return $sanitized;
     }
 }

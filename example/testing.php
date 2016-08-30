@@ -7,14 +7,14 @@ use Fei\Service\Logger\Client\Logger;
 
 $start_time = microtime(true);
 
-//$logger = new Logger([Logger::PARAMETER_BASEURL =>'http://logger.test.flash-global.net']);
+$logger = new Logger([Logger::OPTION_BASEURL =>'http://logger.test.flash-global.net']);
 //$logger = new Logger([Logger::PARAMETER_BASEURL =>'http://localhost:8080']);
-$logger = new Logger([Logger::PARAMETER_BASEURL =>'http://192.168.0.198:8080']);
+$logger = new Logger([Logger::OPTION_BASEURL =>'http://192.168.0.198:8080']);
 $logger->setTransport(new Fei\ApiClient\Transport\BasicTransport());
 
 $notification = new Notification();
 $notification->setMessage('Hello World!');
-$notification->setLevel(Notification::LVL_DEBUG);
+$notification->setLevel(Notification::LVL_ERROR);
 $notification->setCategory(Notification::PERFORMANCE);
 $notification->setContext(
    [
