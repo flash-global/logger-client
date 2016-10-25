@@ -14,10 +14,10 @@ class LoggerTest extends Unit
      */
     protected $tester;
 
-    /** @var  Logger */
+    /** @var Logger */
     protected $logger;
 
-    /** @var  Faker\Generator */
+    /** @var \Faker\Generator */
     protected $faker;
 
     protected function _before()
@@ -105,5 +105,39 @@ class LoggerTest extends Unit
             'Instance of Tests\Fei\Service\Logger\Client\LoggerTest',
             $notification->getBackTrace()[2]['args'][0]
         );
+    }
+
+    public function testWriteToExceptionLogFile()
+    {
+        $transport = $this->createMock(SyncTransportInterface::class);
+        $transport->expects($this->exactly(2))->method('send')->willThrowException(
+            new \Exception('this is a message')
+        );
+
+        $logger = new Logger([Logger::OPTION_BASEURL => 'http://url']);
+        $logger->setTransport($transport);
+        $logger->setOption(Logger::OPTION_LOGFILE, __DIR__ . '/test.log');
+
+        $notification = new Notification();
+        $notification->setMessage($this->faker->sentence);
+        $notification->setLevel(Notification::LVL_ERROR);
+
+        $logger->notify($notification);
+
+        $this->assertTrue(file_exists($logger->getOption(Logger::OPTION_LOGFILE)));
+
+        $this->assertRegExp(
+            '/^\[(.*)\] this is a message$/',
+            file_get_contents($logger->getOption(Logger::OPTION_LOGFILE))
+        );
+
+        $logger->notify($notification);
+
+        $this->assertCount(
+            2,
+            explode("\n", trim(file_get_contents($logger->getOption(Logger::OPTION_LOGFILE))))
+        );
+
+        unlink($logger->getOption(Logger::OPTION_LOGFILE));
     }
 }
