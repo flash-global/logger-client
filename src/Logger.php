@@ -94,7 +94,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
             return $return;
         } catch (\Exception $e) {
-            @file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
+            $this->writeToExceptionLogFile($e->getMessage());
             $this->restoreErrorHandler();
         }
 
@@ -113,10 +113,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
             $this->restoreErrorHandler();
         } catch (\Exception $e) {
-            if (is_writable($this->exceptionLogFile)) {
-                @file_put_contents($this->exceptionLogFile, $e, FILE_APPEND);
-            }
-
+            $this->writeToExceptionLogFile($e->getMessage());
             $this->restoreErrorHandler();
         }
     }
@@ -241,5 +238,18 @@ class Logger extends AbstractApiClient implements LoggerInterface
         }
 
         return array_values($sanitized);
+    }
+
+    /**
+     * Write to exception log file
+     *
+     * @param string $message
+     */
+    protected function writeToExceptionLogFile($message)
+    {
+        if (is_writable($this->exceptionLogFile) || is_writable(dirname($this->exceptionLogFile))) {
+            $message = sprintf('[%s] %s' . PHP_EOL, (new \DateTime())->format(\DateTime::ISO8601), $message);
+            @file_put_contents($this->exceptionLogFile, $message, FILE_APPEND);
+        }
     }
 }
