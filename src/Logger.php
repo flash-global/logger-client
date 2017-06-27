@@ -35,6 +35,26 @@ class Logger extends AbstractApiClient implements LoggerInterface
      */
     protected $previousErrorHandler;
 
+    public function retrieve(array $criteria)
+    {
+        try {
+            $this->registerErrorHandler();
+
+            $request = new RequestDescriptor();
+
+            $request->setUrl($this->buildUrl('/api/notifications?criteria=' . urlencode(json_encode($criteria))));
+            $request->setMethod('GET');
+
+            $return = $this->send($request, ApiRequestOption::NO_RESPONSE);
+
+            $this->restoreErrorHandler();
+
+            return $return;
+        } catch (\Exception $e) {
+            $this->writeToExceptionLogFile($e->getMessage());
+            $this->restoreErrorHandler();
+        }
+    }
     /**
      * @param string|Notification $message
      * @param array               $params
@@ -77,7 +97,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
             }
 
             $serialized = @json_encode($notification->toArray());
-            if (is_null($serialized)) {
+            if (!$serialized) {
                 $this->restoreErrorHandler();
                 return false;
             }
