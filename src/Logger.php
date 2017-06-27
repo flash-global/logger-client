@@ -97,7 +97,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
             }
 
             $serialized = @json_encode($notification->toArray());
-            if (is_null($serialized)) {
+            if (!$serialized) {
                 $this->restoreErrorHandler();
                 return false;
             }
