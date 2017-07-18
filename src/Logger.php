@@ -5,6 +5,8 @@ namespace Fei\Service\Logger\Client;
 use Fei\ApiClient\AbstractApiClient;
 use Fei\ApiClient\ApiRequestOption;
 use Fei\ApiClient\RequestDescriptor;
+use Fei\Service\Logger\Client\Builder\SearchBuilder;
+use Fei\Service\Logger\Client\Exception\LoggerException;
 use Fei\Service\Logger\Entity\Notification;
 use Fei\Service\Logger\Validator\NotificationValidator;
 
@@ -35,8 +37,21 @@ class Logger extends AbstractApiClient implements LoggerInterface
      */
     protected $previousErrorHandler;
 
-    public function retrieve(array $criteria)
+    /**
+     * @param array|SearchBuilder $criteria
+     *
+     * @return bool|\Fei\ApiClient\ResponseDescriptor
+     */
+    public function retrieve($criteria)
     {
+        if ($criteria instanceof SearchBuilder) {
+            $criteria = $criteria->getParams();
+        }
+
+        if (!is_array($criteria)) {
+            throw new LoggerException('$criteria has to be of type array of SearchBuilder');
+        }
+
         try {
             $this->registerErrorHandler();
 
