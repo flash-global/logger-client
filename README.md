@@ -1,56 +1,69 @@
-# Logger Client
+# Service Logger - Client
 
-## Installation
-
-Just add the following requirement to your `composer.json` file:
-
-```
-    "fei/logger-client": "^1.2.0"
-```
-
-## Configuration
-
-The logger client needs some options to work properly. The available options that can be passed to the `__construct()` or `setOptions()` methods are :
+[![GitHub release](https://img.shields.io/github/release/flash-global/logger-client.svg?style=for-the-badge)](README.md) 
 
 
-| Option           | Description                                                                | Type   | Possible Values                                | Default                 |
-|------------------|----------------------------------------------------------------------------|--------|------------------------------------------------|-------------------------|
-| OPTION_BASEURL   | This is the server to which send the requests.                             | string | Any URL, including protocol but excluding path | --                      |
-| OPTION_FILTER    | Minimum notification level required for notifications to be actually sent. | int    | Any Notification::LVL_* constant               | Notification::LVL_ERROR |
-| OPTION_BACKTRACE | Should backtrace be added to notifications before they are sent.           | bool   | true / false                                   | true                    |
-| OPTION_LOGFILE   | File path and name where the Logger will store its own exceptions.         | string | Any writeable file  path                       | /tmp/logger.log         |
+## Table of contents
+- [Purpose](#purpose)
+- [Requirements](#requirements)
+    - [Runtime](#runtime)
+- [Step by step installation](#step-by-step-installation)
+    - [Initialization](#initialization)
+    - [Settings](#settings)
+    - [Known issues](#known-issues)
+- [Link to documentation](#link-to-documentation)
+    - [Examples](#examples)
+- [Contribution](#contribution)
 
-Notes:
-*Logger is an alias of Fei\Service\Logger\Client\Logger*
-*Notification is an alias of Fei\Service\Logger\Entity\Notification*
+## Purpose
+This client permit to use the `Logger Api`. Thanks to it, you could request the API to :
+* Fetch data
+* Create data
 
-## Usage
+easily
+
+## Requirements 
+
+### Runtime
+- PHP 5.5
+
+## Step by step Installation
+> for all purposes (development, contribution and production)
 
 ### Initialization
+- Add the following requirement to your `composer.json` file:
+```"fei/logger-client": "^1.2.0"```
+- Run Composer depedencies installation
+```composer install```
 
-A Logger client should always be initialized by a dependency injection component, since it requires at least one dependency, which is the transport. Moreover, the BASEURL parameter should also depends on environment.
+### Settings
+
+Don't forget to set the right `baseUrl` in files located in examples.
 
 ```php
+<?php 
 // sample configuration for production environment
-$logger = new Logger(array(
-                            Logger::OPTION_BASEURL  => 'http://logger.flash-global.net',
-                            Logger::OPTION_FILTER   => Notification::LVL_DEBUG,
-                          )
-                    );
+$logger = new Logger(
+    [
+        Logger::OPTION_BASEURL  => 'http://logger.flash-global.net',
+        Logger::OPTION_FILTER   => Notification::LVL_DEBUG,
+    ]
+);
 // inject transport classes
 $logger->setTransport(new BasicTransport());
-
-// optionnal asynchronous transport, that will be automatically used to push notifications
-//
-// NOTE this transport requires a beanstalk queue able to listen to its requests
-$pheanstalk = new Pheanstalk('localhost');
-$asyncTransport = new BeanstalkProxyTransport;
-$asyncTransport->setPheanstalk($pheanstalk);
-$logger->setAsyncTransport($asyncTransport);
 ```
 
+### Known issues
+No known issue at this time.
 
-### Pushing a simple notification
+## Link to documentation 
+
+### Examples
+You can test this client easily thanks to the folder [example](example)
+
+Here, an example on how to use example : `php /my/logger-client/example/search.php` 
+
+#### Pushing a simple notification
 
 Once you have set up the Logger, you can start pushing notifications by calling the `notify()` method on the Logger:
 
@@ -64,9 +77,9 @@ $logger->notify('Debug message', array('level' => Notification::LVL_DEBUG));
 
 While its possible to pass more than just the level using the second (array) parameter, it is recommended not to do so. If you want to pass more informations, like a context, please take a look at the following section.
 
-### Pushing a Notification instance
+#### Pushing a Notification instance
 
-The more reliable way to push a notification is to instantiate it by yourself, and then send it through `notify()`, that will also accept Notification instances:
+The more reliable way to push a notification is to instantiate it by yourself, and then send it through `notify()`, that will also accept Logger instances:
 
 ```php
 
@@ -79,6 +92,7 @@ $notification
         ;
         
 $logger->notify($notification);
-
 ```
 
+## Contribution
+As FEI Service, designed and made by OpCoding. The contribution workflow will involve both technical teams. Feel free to contribute, to improve features and apply patches, but keep in mind to carefully deal with pull request. Merging must be the product of complete discussions between Flash and OpCoding teams :) 
