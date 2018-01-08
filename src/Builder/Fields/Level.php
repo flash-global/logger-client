@@ -1,0 +1,15 @@
+<?php
+namespace Fei\Service\Logger\Client\Builder\Fields;
+
+use Fei\Service\Logger\Client\Builder\AbstractBuilder;
+
+class Level extends AbstractBuilder
+{
+    public function build($value, $operator = '=')
+    {
+        $search = $this->builder->getParams();
+        $search['level'] = $value;
+
+        $this->builder->setParams($search);
+    }
+}
