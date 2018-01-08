@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a61e3d1702e741e365f014e8c7327c9e",
+    "content-hash": "e3262fe3f14b8dd72f95b60ff99bc221",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -272,7 +272,7 @@
         },
         {
             "name": "fei/logger-common",
-            "version": "v2.0.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/logger-common.git",
