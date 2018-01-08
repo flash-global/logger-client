@@ -15,7 +15,7 @@
     ],
     "require": {
         "fei/api-client": "^1.1.0",
-        "fei/logger-common": "^1.1.20"
+        "fei/logger-common": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.6",
