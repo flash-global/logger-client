@@ -79,6 +79,50 @@ $notification
         ;
         
 $logger->notify($notification);
-
 ```
 
+### PSR-3 Adapter
+
+PSR-3 describe an interface for logging purpose to ensure interoperability between systems.
+
+For this end we provide the adapter `Fei\Service\Logger\Client\Psr\PsrLoggerAdapter`.
+
+```php
+<?php
+
+use Fei\Service\Logger\Client\Logger;
+use Fei\Service\Logger\Client\Psr\PsrLoggerAdapter;
+
+$logger = new Logger();
+
+$psr = new PsrLoggerAdapter($logger);
+
+$psr->error('This is a error message');
+```
+
+It's always possible to set category, namespace and other notification properties with log context: 
+
+```php
+<?php
+
+use Fei\Service\Logger\Client\Logger;
+use Fei\Service\Logger\Client\Psr\PsrLoggerAdapter;
+use Fei\Service\Logger\Entity\Notification;
+
+$logger = new Logger();
+
+$psr = new PsrLoggerAdapter($logger);
+
+$psr->error(
+    'This is a error message',
+    [
+        'namespace' => '/my/app',
+        'category' => Notification::TRACKING,
+        'key1' => 'value1',
+        'key2' => 'value2'
+    ]
+);
+```
+
+Manageable Notification properties are `flag`, `namespace`, `user`, `server`, `command`, `origin`, `category` and `env`.
+Another key of context will be set in Notification context.
