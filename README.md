@@ -1,4 +1,5 @@
 # Logger Client
+[![GitHub license](https://img.shields.io/github/license/flash-global/logger-client.svg)](https://github.com/flash-global/logger-client)![continuousphp](https://img.shields.io/continuousphp/git-hub/flash-global/logger-client.svg)[![GitHub issues](https://img.shields.io/github/issues/flash-global/logger-client.svg)](https://github.com/flash-global/logger-client/issues)
 
 ## Installation
 

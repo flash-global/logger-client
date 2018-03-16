@@ -2,7 +2,6 @@
 
 namespace Fei\Service\Logger\Client;
 
-
 interface LoggerInterface
 {
     /**
@@ -12,5 +11,4 @@ interface LoggerInterface
      * @return mixed|bool
      */
     public function notify($message, array $params);
-
 }
