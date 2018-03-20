@@ -13,7 +13,7 @@ install:
 script:
     - vendor/bin/codecept run unit
     - vendor/bin/phpcs src
-Psr\Log\LoggerInterface
+
 notifications:
   email:
     on_success: never
