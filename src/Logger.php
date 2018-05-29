@@ -165,7 +165,8 @@ class Logger extends AbstractApiClient implements LoggerInterface
     /**
      * @return string
      */
-    public function getApiKey() {
+    public function getApiKey()
+    {
         return $this->apiKey;
     }
 
@@ -174,7 +175,8 @@ class Logger extends AbstractApiClient implements LoggerInterface
      *
      * @return Logger
      */
-    public function setApiKey($apiKey) {
+    public function setApiKey($apiKey)
+    {
         $this->apiKey = $apiKey;
 
         return $this;
