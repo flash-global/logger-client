@@ -16,6 +16,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
     const OPTION_FILTER = 'filterLevel';
     const OPTION_BACKTRACE = 'includeBacktrace';
     const OPTION_LOGFILE = 'exceptionLogFile';
+    const OPTION_APIKEY = 'apiKey';
 
     /**
      * @var int
@@ -31,6 +32,9 @@ class Logger extends AbstractApiClient implements LoggerInterface
      * @var bool
      */
     protected $includeBacktrace = true;
+
+    /** @var string */
+    protected $apiKey = '';
 
     /**
      * @var mixed
@@ -120,6 +124,11 @@ class Logger extends AbstractApiClient implements LoggerInterface
             $request = new RequestDescriptor();
             $request->addBodyParam('notification', $serialized);
 
+
+            if ($this->apiKey) {
+                $request->addHeader('Authorization', $this->getApiKey());
+            }
+
             $request->setUrl($this->buildUrl('/api/notifications'));
             $request->setMethod('POST');
 
@@ -151,6 +160,26 @@ class Logger extends AbstractApiClient implements LoggerInterface
             $this->writeToExceptionLogFile($e->getMessage());
             $this->restoreErrorHandler();
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param $apiKey
+     *
+     * @return Logger
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**
