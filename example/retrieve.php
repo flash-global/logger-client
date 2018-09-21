@@ -10,6 +10,7 @@ $start_time = microtime(true);
 //$logger = new Logger([Logger::OPTION_BASEURL =>'http://logger.test.flash-global.net']);
 $logger = new Logger([Logger::OPTION_BASEURL =>'http://192.168.1.111:8020']);
 $logger->setTransport(new Fei\ApiClient\Transport\BasicTransport());
+$logger->setAuthorization('key');
 
 $criteria = array('toto' => 'tata');
 

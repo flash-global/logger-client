@@ -10,6 +10,7 @@ $start_time = microtime(true);
 //$logger = new Logger([Logger::OPTION_BASEURL =>'http://logger.test.flash-global.net']);
 $logger = new Logger([Logger::OPTION_BASEURL =>'http://localhost:8082']);
 $logger->setTransport(new Fei\ApiClient\Transport\BasicTransport());
+$logger->setAuthorization('key');
 
 $notification = new Notification();
 $notification->setMessage('Hello World!');

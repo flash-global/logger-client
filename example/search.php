@@ -7,8 +7,9 @@ use Fei\Service\Logger\Client\Logger;
 
 $start_time = microtime(true);
 
-$logger = new Logger([Logger::OPTION_BASEURL =>'http://127.0.0.1:8090']);
+$logger = new Logger([Logger::OPTION_BASEURL =>'http://127.0.0.1:80']);
 $logger->setTransport(new Fei\ApiClient\Transport\BasicTransport());
+$logger->setAuthorization('key');
 
 $builder = new SearchBuilder();
 $builder->message()->beginsWith('Call');
