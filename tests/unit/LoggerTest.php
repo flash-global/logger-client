@@ -105,7 +105,7 @@ class LoggerTest extends Unit
 
     public function testAcceptApiKey() {
         $logger = new Logger([Logger::OPTION_BASEURL => 'http://url']);
-        $logger->setOption(Logger::OPTION_APIKEY, 'toto');
+        $logger->setOption(Logger::OPTION_HEADER_AUTHORIZATION, 'toto');
 
         $notification = new Notification();
         $notification->setMessage($this->faker->sentence);
