@@ -20,7 +20,7 @@ The logger client needs some options to work properly. The available options tha
 | OPTION_FILTER    | Minimum notification level required for notifications to be actually sent. | int    | Any Notification::LVL_* constant               | Notification::LVL_ERROR |
 | OPTION_BACKTRACE | Should backtrace be added to notifications before they are sent.           | bool   | true / false                                   | true                    |
 | OPTION_LOGFILE   | File path and name where the Logger will store its own exceptions.         | string | Any writeable file  path                       | /tmp/logger.log         |
-| OPTION_APIKEY    | Api Key for authentification                                               | string | Any string value                               | ''                      |
+| OPTION_HEADER_AUTHORIZATION    | Api Key for authentification                                               | string | Any string value                               | ''                      |
 
 Notes:
 *Logger is an alias of Fei\Service\Logger\Client\Logger*
