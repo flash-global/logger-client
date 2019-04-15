@@ -188,9 +188,9 @@ class Logger extends AbstractApiClient implements LoggerInterface
         $params += array('reported_at' => new \DateTime());
         $params += array('server' => $this->getServerName());
 
-        $data += $params;
+        $mergedData = array_merge($data, $params);
 
-        $notification->hydrate($data);
+        $notification->hydrate($mergedData);
 
         return $notification;
     }
