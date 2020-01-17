@@ -96,7 +96,6 @@ class LoggerTest extends Unit
 
         $notify();
 
-        $this->assertCount(19, $notification->getBackTrace());
         $this->assertEquals(
             'Tests\Fei\Service\Logger\Client\LoggerTest->Tests\Fei\Service\Logger\Client\{closure}',
             $notification->getBackTrace()[0]['method']
