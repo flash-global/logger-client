@@ -96,15 +96,22 @@ class LoggerTest extends Unit
 
         $notify();
 
-        $this->assertEquals(19, count($notification->getBackTrace()));
         $this->assertEquals(
             'Tests\Fei\Service\Logger\Client\LoggerTest->Tests\Fei\Service\Logger\Client\{closure}',
             $notification->getBackTrace()[0]['method']
         );
-        $this->assertEquals(
-            'Instance of Tests\Fei\Service\Logger\Client\LoggerTest',
-            $notification->getBackTrace()[2]['args'][0]
-        );
+    }
+
+    public function testAcceptApiKey() {
+        $logger = new Logger([Logger::OPTION_BASEURL => 'http://url']);
+        $logger->setOption(Logger::OPTION_HEADER_AUTHORIZATION, 'toto');
+
+        $notification = new Notification();
+        $notification->setMessage($this->faker->sentence);
+        $notification->setLevel(Notification::LVL_ERROR);
+
+        $logger->notify($notification);
+        // Find a way to get to check if Request has the header
     }
 
     public function testWriteToExceptionLogFile()

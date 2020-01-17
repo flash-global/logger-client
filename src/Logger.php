@@ -12,7 +12,6 @@ use Fei\Service\Logger\Validator\NotificationValidator;
 
 class Logger extends AbstractApiClient implements LoggerInterface
 {
-    const OPTION_BASEURL = 'baseUrl';
     const OPTION_FILTER = 'filterLevel';
     const OPTION_BACKTRACE = 'includeBacktrace';
     const OPTION_LOGFILE = 'exceptionLogFile';
@@ -189,9 +188,9 @@ class Logger extends AbstractApiClient implements LoggerInterface
         $params += array('reported_at' => new \DateTime());
         $params += array('server' => $this->getServerName());
 
-        $data += $params;
+        $mergedData = array_merge($data, $params);
 
-        $notification->hydrate($data);
+        $notification->hydrate($mergedData);
 
         return $notification;
     }

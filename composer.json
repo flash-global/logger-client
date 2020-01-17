@@ -17,9 +17,9 @@
   ],
   "require": {
     "php": "^7.0",
-    "fei/api-client": "^1.1.0",
-    "fei/logger-common": "^1.1.20",
-    "psr/log": "^1.0"
+    "fei/api-client": "^1.5.1",
+    "fei/logger-common": "^1.2.3",
+    "psr/log": "^1.1.2"
   },
   "require-dev": {
     "fzaninotto/faker": "^1.6",
