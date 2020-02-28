@@ -38,10 +38,10 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
     /**
      * @param array|SearchBuilder $criteria
-     *
+     * @param int $limit
      * @return bool|\Fei\ApiClient\ResponseDescriptor
      */
-    public function retrieve($criteria)
+    public function retrieve($criteria, int $limit = 10)
     {
         if ($criteria instanceof SearchBuilder) {
             $criteria = $criteria->getParams();
@@ -56,7 +56,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
             $request = new RequestDescriptor();
 
-            $request->setUrl($this->buildUrl('/api/notifications?criteria=' . urlencode(json_encode($criteria))));
+            $request->setUrl($this->buildUrl('/api/notifications?per_page='. $limit . '&criteria=' . urlencode(json_encode($criteria))));
             $request->setMethod('GET');
 
             $return = $this->send($request, ApiRequestOption::NO_RESPONSE);
