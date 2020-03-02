@@ -17,7 +17,7 @@ class SearchBuilder
     protected $params = [];
 
     /** @var int */
-    protected $limitPage = 10;
+    protected $perPage = 10;
 
     /**
      * Search on the namespace
@@ -159,18 +159,18 @@ class SearchBuilder
     /**
      * @return int
      */
-    public function getLimitPage(): int
+    public function getPerPage(): int
     {
-        return $this->limitPage;
+        return $this->perPage;
     }
 
     /**
-     * @param int $limitPage
+     * @param int $perPage
      * @return SearchBuilder
      */
-    public function setLimitPage(int $limitPage = 10): SearchBuilder
+    public function setPerPage(int $perPage = 10): SearchBuilder
     {
-        $this->limitPage = $limitPage;
+        $this->perPage = $perPage;
         return $this;
     }
 

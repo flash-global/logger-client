@@ -43,12 +43,12 @@ class Logger extends AbstractApiClient implements LoggerInterface
     public function retrieve($filters)
     {
         if (is_array($filters)) {
-            $limit = $filters['perPage'] ?? 10;
+            $perPage = $filters['perPage'] ?? 10;
         }
 
         if ($filters instanceof SearchBuilder) {
             $criteria = $filters->getParams();
-            $limit = $filters->getLimitPage();
+            $perPage = $filters->getPerPage();
         }
 
         if (!is_array($criteria)) {
@@ -60,7 +60,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
             $request = new RequestDescriptor();
 
-            $request->setUrl($this->buildUrl('/api/notifications?per_page='. $limit . '&criteria=' . urlencode(json_encode($criteria))));
+            $request->setUrl($this->buildUrl('/api/notifications?per_page='. $perPage . '&criteria=' . urlencode(json_encode($criteria))));
             $request->setMethod('GET');
 
             $return = $this->send($request, ApiRequestOption::NO_RESPONSE);
