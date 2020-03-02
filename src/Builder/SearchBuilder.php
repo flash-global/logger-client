@@ -18,6 +18,7 @@ class SearchBuilder
 
     /** @var int */
     protected $limit = 10;
+
     /**
      * Search on the namespace
      *
@@ -172,8 +173,6 @@ class SearchBuilder
         $this->limit = $limit;
         return $this;
     }
-
-
 
     public function __call($name, $arguments)
     {
