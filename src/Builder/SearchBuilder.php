@@ -16,6 +16,12 @@ class SearchBuilder
 {
     protected $params = [];
 
+    /** @var int */
+    protected $perPage = 10;
+
+    /** @var int */
+    protected $page = 1;
+
     /**
      * Search on the namespace
      *
@@ -152,7 +158,43 @@ class SearchBuilder
 
         return $this;
     }
-    
+
+    /**
+     * @return int
+     */
+    public function getPerPage()
+    {
+        return $this->perPage;
+    }
+
+    /**
+     * @param int $perPage
+     * @return SearchBuilder
+     */
+    public function setPerPage($perPage): SearchBuilder
+    {
+        $this->perPage = $perPage;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * @param int $page
+     * @return SearchBuilder
+     */
+    public function setPage($page): SearchBuilder
+    {
+        $this->page = $page;
+        return $this;
+    }
+
     public function __call($name, $arguments)
     {
         $class = 'Fei\Service\Logger\Client\Builder\Fields\\' . ucfirst($this->toCamelCase($name));

@@ -37,14 +37,20 @@ class Logger extends AbstractApiClient implements LoggerInterface
     protected $previousErrorHandler;
 
     /**
-     * @param array|SearchBuilder $criteria
-     *
+     * @param array|SearchBuilder $filters
      * @return bool|\Fei\ApiClient\ResponseDescriptor
      */
-    public function retrieve($criteria)
+    public function retrieve($filters)
     {
-        if ($criteria instanceof SearchBuilder) {
-            $criteria = $criteria->getParams();
+        if (is_array($filters)) {
+            $perPage = $filters['perPage'] ?? 10;
+            $page = $filters['page'] ?? 1;
+        }
+
+        if ($filters instanceof SearchBuilder) {
+            $criteria = $filters->getParams();
+            $perPage = $filters->getPerPage();
+            $page = $filters->getPage();
         }
 
         if (!is_array($criteria)) {
@@ -56,7 +62,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
 
             $request = new RequestDescriptor();
 
-            $request->setUrl($this->buildUrl('/api/notifications?criteria=' . urlencode(json_encode($criteria))));
+            $request->setUrl($this->buildUrl('/api/notifications?per_page='. $perPage . '&page=' . $page . '&criteria=' . urlencode(json_encode($criteria))));
             $request->setMethod('GET');
 
             $return = $this->send($request, ApiRequestOption::NO_RESPONSE);
