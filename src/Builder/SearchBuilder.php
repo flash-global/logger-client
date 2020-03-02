@@ -16,6 +16,8 @@ class SearchBuilder
 {
     protected $params = [];
 
+    /** @var int */
+    protected $limit = 10;
     /**
      * Search on the namespace
      *
@@ -152,7 +154,27 @@ class SearchBuilder
 
         return $this;
     }
-    
+
+    /**
+     * @return int
+     */
+    public function getLimit(): int
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @param int $limit
+     * @return SearchBuilder
+     */
+    public function setLimit(int $limit = 10): SearchBuilder
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+
+
     public function __call($name, $arguments)
     {
         $class = 'Fei\Service\Logger\Client\Builder\Fields\\' . ucfirst($this->toCamelCase($name));

@@ -37,14 +37,18 @@ class Logger extends AbstractApiClient implements LoggerInterface
     protected $previousErrorHandler;
 
     /**
-     * @param array|SearchBuilder $criteria
-     * @param int $limit
+     * @param array|SearchBuilder $filters
      * @return bool|\Fei\ApiClient\ResponseDescriptor
      */
-    public function retrieve($criteria, int $limit = 10)
+    public function retrieve($filters)
     {
-        if ($criteria instanceof SearchBuilder) {
-            $criteria = $criteria->getParams();
+        if (is_array($filters)) {
+            $limit = $filters['perPage'] ?? 10;
+        }
+
+        if ($filters instanceof SearchBuilder) {
+            $criteria = $filters->getParams();
+            $limit = $filters->getLimit();
         }
 
         if (!is_array($criteria)) {
