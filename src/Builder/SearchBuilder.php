@@ -19,6 +19,9 @@ class SearchBuilder
     /** @var int */
     protected $perPage = 10;
 
+    /** @var int */
+    protected $page = 1;
+
     /**
      * Search on the namespace
      *
@@ -159,7 +162,7 @@ class SearchBuilder
     /**
      * @return int
      */
-    public function getPerPage(): int
+    public function getPerPage()
     {
         return $this->perPage;
     }
@@ -168,9 +171,27 @@ class SearchBuilder
      * @param int $perPage
      * @return SearchBuilder
      */
-    public function setPerPage(int $perPage = 10): SearchBuilder
+    public function setPerPage($perPage): SearchBuilder
     {
         $this->perPage = $perPage;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * @param int $page
+     * @return SearchBuilder
+     */
+    public function setPage($page): SearchBuilder
+    {
+        $this->page = $page;
         return $this;
     }
 
