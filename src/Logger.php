@@ -45,6 +45,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
         if (is_array($filters)) {
             $perPage = $filters['perPage'] ?? 10;
             $page = $filters['page'] ?? 1;
+            $criteria = $filters;
         }
 
         if ($filters instanceof SearchBuilder) {
