@@ -71,7 +71,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
             $this->restoreErrorHandler();
 
             return $return;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->writeToExceptionLogFile($e->getPrevious() ? $e->getPrevious()->getMessage(): $e->getMessage());
             $this->restoreErrorHandler();
         }
@@ -134,7 +134,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
             $this->restoreErrorHandler();
 
             return $return;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->writeToExceptionLogFile($e->getPrevious() ? $e->getPrevious()->getMessage(): $e->getMessage());
             $this->restoreErrorHandler();
         }
@@ -153,7 +153,7 @@ class Logger extends AbstractApiClient implements LoggerInterface
             parent::commit();
 
             $this->restoreErrorHandler();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->writeToExceptionLogFile($e->getPrevious() ? $e->getPrevious()->getMessage(): $e->getMessage());
             $this->restoreErrorHandler();
         }
