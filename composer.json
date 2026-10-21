@@ -16,14 +16,33 @@
     }
   ],
   "require": {
-    "php": "^7.0",
-    "fei/api-client": "^1.5.1",
-    "fei/logger-common": "^1.2.3",
-    "psr/log": "^1.1.2"
+    "php": "^8.5",
+    "fei/api-client": "dev-feature/php-8.5 as 3.0.0",
+    "fei/logger-common": "dev-feature/php-8.5 as 2.0.0",
+    "psr/log": "^1.1.4 || ^2.0 || ^3.0",
+    "fei/entities": "dev-feature/php-8.5 as 3.0.0"
   },
   "require-dev": {
-    "fzaninotto/faker": "^1.6",
-    "codeception/codeception": "^2.2",
-    "squizlabs/php_codesniffer": "3.*"
+    "fakerphp/faker": "^1.23",
+    "codeception/codeception": "^5.1",
+    "codeception/module-asserts": "^3.0",
+    "squizlabs/php_codesniffer": "^3.13"
+  },
+  "repositories": {
+    "fei-logger-common": {
+      "type": "vcs",
+      "url": "https://github.com/flash-global/logger-common",
+      "no-api": true
+    },
+    "fei-api-client": {
+      "type": "vcs",
+      "url": "https://github.com/flash-global/api-client",
+      "no-api": true
+    },
+    "fei-entities": {
+      "type": "vcs",
+      "url": "https://github.com/flash-global/entities",
+      "no-api": true
+    }
   }
 }

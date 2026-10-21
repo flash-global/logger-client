@@ -43,7 +43,7 @@ class LoggerTest extends Unit
         $logger = new Logger();
 
         $logger->begin();
-        $this->assertAttributeEquals(true, 'isDelayed', $logger);
+        $this->assertEquals(true, (new \ReflectionProperty($logger, 'isDelayed'))->getValue($logger));
     }
 
     public function testLoggerCanNotify()
@@ -52,7 +52,7 @@ class LoggerTest extends Unit
         $logger->setBaseUrl('http://azeaze.fr/');
 
         $notification = new Notification();
-        $notification->setMessage($this->faker->sentence);
+        $notification->setMessage($this->faker->sentence());
         $notification->setLevel(Notification::LVL_ERROR);
 
         $transport = $this->createMock(SyncTransportInterface::class);
@@ -68,7 +68,7 @@ class LoggerTest extends Unit
         $logger->setBaseUrl('http://azeaze.fr/');
 
         $notification = new Notification();
-        $notification->setMessage($this->faker->sentence);
+        $notification->setMessage($this->faker->sentence());
         $notification->setLevel(Notification::LVL_ERROR);
 
         $transport = $this->createMock(SyncTransportInterface::class);
@@ -85,7 +85,7 @@ class LoggerTest extends Unit
         $logger->setBaseUrl('http://azeaze.fr/');
 
         $notification = new Notification();
-        $notification->setMessage($this->faker->sentence);
+        $notification->setMessage($this->faker->sentence());
         $notification->setLevel(Notification::LVL_ERROR);
 
         $logger->setTransport($this->createMock(SyncTransportInterface::class));
@@ -96,8 +96,9 @@ class LoggerTest extends Unit
 
         $notify();
 
-        $this->assertEquals(
-            'Tests\Fei\Service\Logger\Client\LoggerTest->Tests\Fei\Service\Logger\Client\{closure}',
+        // PHP >= 8.4 names closures "{closure:Class::method():line}"
+        $this->assertStringStartsWith(
+            'Tests\Fei\Service\Logger\Client\LoggerTest->{closure:Tests\Fei\Service\Logger\Client\LoggerTest::testBacktrace():',
             $notification->getBackTrace()[0]['method']
         );
     }
@@ -107,7 +108,7 @@ class LoggerTest extends Unit
         $logger->setOption(Logger::OPTION_HEADER_AUTHORIZATION, 'toto');
 
         $notification = new Notification();
-        $notification->setMessage($this->faker->sentence);
+        $notification->setMessage($this->faker->sentence());
         $notification->setLevel(Notification::LVL_ERROR);
 
         $logger->notify($notification);
@@ -126,7 +127,7 @@ class LoggerTest extends Unit
         $logger->setOption(Logger::OPTION_LOGFILE, __DIR__ . '/test.log');
 
         $notification = new Notification();
-        $notification->setMessage($this->faker->sentence);
+        $notification->setMessage($this->faker->sentence());
         $notification->setLevel(Notification::LVL_ERROR);
 
         $logger->notify($notification);

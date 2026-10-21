@@ -22,7 +22,7 @@ class PsrLoggerAdapterTest extends TestCase
         $adapter = new PsrLoggerAdapter($client);
 
         $this->assertEquals($client, $adapter->getClient());
-        $this->assertAttributeEquals($adapter->getClient(), 'client', $adapter);
+        $this->assertEquals($adapter->getClient(), (new \ReflectionProperty($adapter, 'client'))->getValue($adapter));
     }
 
     public function testContextExtractor()
@@ -35,7 +35,7 @@ class PsrLoggerAdapterTest extends TestCase
         $adapter->setExtractor(new ContextExtractor());
 
         $this->assertEquals(new ContextExtractor(), $adapter->getExtractor());
-        $this->assertAttributeEquals($adapter->getExtractor(), 'extractor', $adapter);
+        $this->assertEquals($adapter->getExtractor(), (new \ReflectionProperty($adapter, 'extractor'))->getValue($adapter));
     }
 
     public function testLog()
