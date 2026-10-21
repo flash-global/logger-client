@@ -96,8 +96,9 @@ class LoggerTest extends Unit
 
         $notify();
 
-        $this->assertEquals(
-            'Tests\Fei\Service\Logger\Client\LoggerTest->Tests\Fei\Service\Logger\Client\{closure}',
+        // PHP >= 8.4 names closures "{closure:Class::method():line}"
+        $this->assertStringStartsWith(
+            'Tests\Fei\Service\Logger\Client\LoggerTest->{closure:Tests\Fei\Service\Logger\Client\LoggerTest::testBacktrace():',
             $notification->getBackTrace()[0]['method']
         );
     }
